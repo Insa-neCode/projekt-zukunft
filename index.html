@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stärken-Fragebogen — Projekt Zukunft</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap');
+
+  :root{
+    --bg: #FAF6EF;
+    --card: #FFFFFF;
+    --ink: #232323;
+    --ink-soft: #5B5548;
+    --line: #E4DCCB;
+    --teal: #4E82BE;
+    --teal-deep: #2F5D87;
+    --coral: #C97A2E;
+    --coral-soft: #FBEEDD;
+    --chip-off: #F1ECE0;
+    --chip-on: var(--teal);
+    --focus: #4E82BE;
+  }
+  :root:not([data-theme="light"]){
+    @media (prefers-color-scheme: dark){
+      --bg: #1B1B18;
+      --card: #262622;
+      --ink: #F1EDE3;
+      --ink-soft: #C9C2B0;
+      --line: #3A392F;
+      --teal: #6FA8DE;
+      --teal-deep: #9CC6EC;
+      --coral: #E8A968;
+      --coral-soft: #3A2C1C;
+      --chip-off: #33322A;
+      --chip-on: var(--teal);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg: #1B1B18;
+    --card: #262622;
+    --ink: #F1EDE3;
+    --ink-soft: #C9C2B0;
+    --line: #3A392F;
+    --teal: #6FA8DE;
+    --teal-deep: #9CC6EC;
+    --coral: #E8A968;
+    --coral-soft: #3A2C1C;
+    --chip-off: #33322A;
+    --chip-on: var(--teal);
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Atkinson Hyperlegible', Arial, sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    padding:18px;
+  }
+  .wrap{max-width:760px;margin:0 auto;}
+
+  /* Kopfbereich */
+  .header-band{
+    background:var(--teal);
+    border-radius:18px;
+    padding:22px 24px;
+    margin-bottom:22px;
+  }
+  .header-flex{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;}
+  .eyebrow{font-size:0.78rem;font-weight:700;color:rgba(255,255,255,0.85);margin:0 0 6px;}
+  .header-title{font-size:1.7rem;line-height:1.2;margin:0 0 8px;color:#fff;}
+  .header-sub{margin:0;font-size:0.95rem;color:rgba(255,255,255,0.92);max-width:56ch;}
+  .logo-badge{background:#fff;border-radius:10px;padding:6px 10px;flex:0 0 auto;display:flex;align-items:center;}
+  .logo-badge img{height:34px;width:auto;display:block;}
+
+  .student-fields{display:flex;gap:24px;flex-wrap:wrap;margin-bottom:22px;}
+  .field{flex:1 1 220px;}
+  .field label{display:block;font-size:0.8rem;font-weight:700;color:var(--ink-soft);margin-bottom:4px;}
+  .field input{
+    width:100%;border:none;border-bottom:2px solid var(--teal);background:transparent;
+    font-family:inherit;font-size:1rem;padding:6px 2px;color:var(--ink);
+  }
+  .field input:focus{outline:none;border-bottom-color:var(--teal-deep);}
+
+  h1{font-size:1.6rem;line-height:1.25;margin:0 0 6px;}
+  .lead{color:var(--ink-soft);margin:0 0 24px;max-width:64ch;}
+
+  .part{margin-bottom:34px;}
+  .part-title{font-size:1.15rem;font-weight:700;color:var(--teal-deep);margin:0 0 4px;}
+  .part-desc{color:var(--ink-soft);margin:0 0 16px;max-width:64ch;font-size:0.95rem;}
+
+  .item{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:14px 16px;
+    margin-bottom:10px;
+  }
+  .item-label{font-weight:700;margin-bottom:2px;display:block;}
+  .item-desc{display:block;color:var(--ink-soft);font-size:0.85rem;margin-bottom:10px;font-style:italic;}
+
+  .cluster-heading{
+    font-size:1rem;font-weight:700;color:var(--coral);
+    margin:22px 0 8px;padding-bottom:4px;border-bottom:1.5px solid var(--coral-soft);
+  }
+  .cluster-heading:first-child{margin-top:0;}
+
+  .chip-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px;}
+  .chip-row input{position:absolute;opacity:0;pointer-events:none;}
+  .chip-row label{
+    border:1px solid var(--line);background:var(--chip-off);color:var(--ink-soft);
+    border-radius:999px;padding:8px 14px;font-size:0.88rem;cursor:pointer;user-select:none;
+    transition:background .15s, color .15s, border-color .15s;
+  }
+  .chip-row input:checked + label{background:var(--chip-on);border-color:var(--chip-on);color:#fff;font-weight:700;}
+  .chip-row input:focus-visible + label{outline:3px solid var(--focus);outline-offset:2px;}
+
+  .free-item{margin-bottom:18px;}
+  .free-item label{font-weight:700;display:block;margin-bottom:8px;}
+  .free-item textarea{min-height:70px;}
+
+  .translate-block{margin-bottom:16px;}
+  .translate-block:last-child{margin-bottom:0;}
+  .translate-block h3{font-size:0.98rem;margin:0 0 4px;color:var(--teal-deep);}
+  .translate-block p{margin:0 0 6px;font-size:0.92rem;}
+  .translate-block .tip{font-size:0.86rem;color:var(--ink-soft);}
+  .scale{display:flex;gap:6px;flex-wrap:wrap;}
+  .scale label{
+    flex:1 1 auto;
+    min-width:78px;
+    text-align:center;
+    border:1px solid var(--line);
+    background:var(--chip-off);
+    color:var(--ink-soft);
+    border-radius:8px;
+    padding:8px 6px;
+    font-size:0.82rem;
+    cursor:pointer;
+    user-select:none;
+    transition:background .15s, color .15s, border-color .15s;
+  }
+  .scale input{position:absolute;opacity:0;pointer-events:none;}
+  .scale input:checked + label{
+    background:var(--chip-on);
+    border-color:var(--chip-on);
+    color:#fff;
+    font-weight:700;
+  }
+  .scale input:focus-visible + label{outline:3px solid var(--focus);outline-offset:2px;}
+
+  .c16-card{
+    background:var(--coral-soft);
+    border:1px solid var(--coral);
+    border-radius:12px;
+    padding:16px 18px;
+  }
+  .c16-card p{margin:0 0 10px;font-size:0.95rem;}
+  .c16-card a{color:var(--coral);font-weight:700;}
+  .c16-source{font-size:0.78rem;color:var(--ink-soft);margin-top:10px;}
+
+  .cta-row{display:flex;gap:12px;flex-wrap:wrap;margin:28px 0;}
+  button{
+    font-family:inherit;
+    font-size:1rem;
+    font-weight:700;
+    padding:13px 22px;
+    border-radius:10px;
+    border:none;
+    cursor:pointer;
+  }
+  #evalBtn{background:var(--teal);color:#fff;}
+  #evalBtn:hover{background:var(--teal-deep);}
+  #printBtn{background:transparent;color:var(--teal-deep);border:1.5px solid var(--teal);}
+  #printBtn:hover{background:var(--chip-off);}
+
+  #hint{font-size:0.85rem;color:var(--coral);margin-top:-14px;margin-bottom:20px;display:none;}
+
+  #results{display:none;margin-top:8px;}
+  .result-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin-bottom:16px;}
+  .result-card h2{font-size:1.1rem;margin:0 0 12px;color:var(--teal-deep);display:flex;align-items:center;gap:9px;}
+  .card-icon{width:21px;height:21px;flex:0 0 auto;stroke:var(--teal);vertical-align:-6px;}
+
+  .strength-row{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
+  .strength-row:last-child{margin-bottom:0;}
+  .strength-label{flex:0 0 200px;font-weight:700;font-size:0.92rem;}
+  .strength-track{flex:1;height:9px;background:var(--chip-off);border-radius:5px;overflow:hidden;}
+  .strength-fill{height:100%;background:var(--teal);border-radius:5px;}
+  .strength-pct{flex:0 0 40px;text-align:right;font-size:0.85rem;color:var(--ink-soft);}
+  .strength-check{color:var(--coral);font-weight:700;margin-left:4px;}
+
+  .profile-intro{font-size:1rem;line-height:1.6;margin:0 0 18px;padding-bottom:16px;border-bottom:1px solid var(--line);}
+  .profile-intro strong{color:var(--teal-deep);}
+  .detail-heading{font-size:0.82rem;font-weight:700;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.03em;margin:18px 0 10px;}
+  .cluster-evidence{font-size:0.88rem;color:var(--ink-soft);margin:2px 0 0;}
+  .top-list{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 6px;padding:0;list-style:none;}
+  .top-list li{background:var(--coral-soft);color:var(--coral);border:1px solid var(--coral);padding:7px 13px;border-radius:999px;font-weight:700;font-size:0.9rem;}
+  .bar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:0.92rem;}
+  .bar-label{flex:0 0 190px;}
+  .bar-track{flex:1;background:var(--chip-off);border-radius:6px;height:10px;overflow:hidden;}
+  .bar-fill{height:100%;background:var(--teal);border-radius:6px;}
+  textarea{
+    width:100%;min-height:150px;font-family:inherit;font-size:0.92rem;
+    padding:12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);
+    resize:vertical;
+  }
+  .print-summary{display:none;}
+  .note{font-size:0.85rem;color:var(--ink-soft);margin-top:6px;}
+
+  .signature{
+    margin-top:28px;padding-top:14px;border-top:1px solid var(--line);
+    font-size:0.75rem;color:var(--ink-soft);text-align:center;
+  }
+
+  @page{ margin: 14mm; }
+  @media print{
+    body{background:#fff; -webkit-print-color-adjust:exact; print-color-adjust:exact;}
+    *{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+    .part, .cta-row, .c16-card, .lead{display:none !important;}
+    #results{display:block !important;}
+    .result-card{page-break-inside:avoid; break-inside:avoid; border-color:#ccc;}
+    .header-band{page-break-inside:avoid; break-inside:avoid;}
+    textarea{display:none;}
+    .print-summary{
+      display:block; white-space:pre-wrap; font-family:inherit; font-size:0.92rem;
+      border:1px solid #ccc; border-radius:10px; padding:12px;
+    }
+    button{display:none;}
+  }
+  @media (max-width:480px){
+    .bar-label{flex:0 0 130px;font-size:0.85rem;}
+    .strength-label{flex:0 0 130px;font-size:0.85rem;}
+    h1{font-size:1.35rem;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header-band">
+    <div class="header-flex">
+      <div>
+        <p class="eyebrow">Verantwortung 2 · Jahrgangsstufe 10 · Schuljahr 2026/27</p>
+        <h1 class="header-title">Dein Stärken-Fragebogen</h1>
+        <p class="header-sub">Bevor du dein Projekt wählst: Was bringst du schon mit?</p>
+      </div>
+      <div class="logo-badge">
+        <img src="data:image/jpeg;base64,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" alt="Gesamtschule Pulheim" />
+      </div>
+    </div>
+  </div>
+
+  <div class="student-fields">
+    <div class="field">
+      <label for="studentName">Name</label>
+      <input type="text" id="studentName" placeholder="Vorname Nachname">
+    </div>
+    <div class="field">
+      <label for="studentClass">Klasse</label>
+      <input type="text" id="studentClass" placeholder="z. B. 10a">
+    </div>
+  </div>
+
+  <p class="lead">Beantworte die Fragen ehrlich und spontan — es gibt kein richtig oder falsch. Am Ende bekommst du eine Übersicht deiner Stärken, die du ausgedruckt in dein Talentportfolio abheftest.</p>
+
+  <p id="restoreBanner" class="note" style="display:none;background:var(--coral-soft);border:1px solid var(--coral);border-radius:10px;padding:10px 14px;">Deine vorherigen Antworten wurden auf diesem Gerät gefunden und wieder eingetragen. <button id="resetBtn" type="button" style="margin-left:6px;background:transparent;border:none;text-decoration:underline;color:var(--teal-deep);cursor:pointer;padding:0;font:inherit;">Stattdessen neu beginnen</button></p>
+
+
+  <div class="part">
+    <p class="part-title">Teil A — Meine Fähigkeiten</p>
+    <p class="part-desc">Wie sehr trifft das auf dich zu?</p>
+    <div id="partA"></div>
+    <p class="part-desc" style="margin-top:24px;">Und jetzt eine schwierigere Frage: Wenn du nur drei wählen dürftest, welche drei Fähigkeiten passen am besten zu dir? Wähle unten genau drei aus.</p>
+    <div class="chip-row" id="top3Chips"></div>
+    <p class="note" id="top3Hint" style="display:none;color:var(--coral);">Du kannst maximal drei auswählen. Entferne erst eine Auswahl, bevor du eine neue triffst.</p>
+  </div>
+
+  <div class="part">
+    <p class="part-title">Teil B — Meine Arbeitsweise</p>
+    <p class="part-desc">Auch hier: Wie sehr trifft das auf dich zu?</p>
+    <div id="partB"></div>
+  </div>
+
+  <div class="part">
+    <p class="part-title">Teil C — Meine Interessen</p>
+    <p class="part-desc">Mit welchen Themen beschäftigst du dich gerne, in der Schule, im Hobby oder in der Freizeit? Wähle aus, was zu dir passt (Mehrfachauswahl möglich).</p>
+    <div class="chip-row" id="interestChips"></div>
+    <div class="free-item">
+      <label for="interestFree">Gibt es ein Thema, das dich besonders beschäftigt?</label>
+      <textarea id="interestFree" placeholder="z. B. ein Hobby, ein Buch, eine Serie, ein Ereignis, ein Sport ..."></textarea>
+    </div>
+    <div class="free-item">
+      <label for="problemFree">Gibt es etwas in deiner Umgebung, Schule oder Gesellschaft, das du gerne verbessern oder verändern würdest?</label>
+      <textarea id="problemFree" placeholder="Auch eine kleine Idee zählt, muss nicht die Welt retten."></textarea>
+    </div>
+  </div>
+
+  <div class="part">
+    <p class="part-title">Teil D — Zusatz (freiwillig)</p>
+    <div class="c16-card">
+      <p><strong>Wie tickst du grundsätzlich?</strong> Der 16Personalities-Test zeigt dir in ca. 10 Minuten einen Persönlichkeitstyp — wie du Energie tankst, Entscheidungen triffst und an Aufgaben rangehst. Das ist kein Teil deiner Auswertung hier, sondern ein eigenständiger, freiwilliger Denkanstoß für unser Gespräch beim Golden Circle.</p>
+      <a href="https://www.16personalities.com/de/kostenloser-personlichkeitstest" target="_blank" rel="noopener">Test auf 16personalities.com starten →</a>
+      <div class="student-fields" style="margin:16px 0 6px;">
+        <div class="field">
+          <label for="c16Type">Dein Persönlichkeitstyp</label>
+          <select id="c16Type"><option value="">Bitte wählen</option></select>
+        </div>
+        <div class="field">
+          <label for="c16Variant">Untergruppierung</label>
+          <select id="c16Variant">
+            <option value="">Bitte wählen</option>
+            <option value="A">Assertive (-A)</option>
+            <option value="T">Turbulent (-T)</option>
+          </select>
+        </div>
+      </div>
+      <p id="c16Desc" class="note" style="display:none;"></p>
+      <p class="note" style="margin-top:10px;"><strong>Wichtig:</strong> Das ist eine Momentaufnahme. An einem anderen Tag oder in einer anderen Stimmung kann der Test durchaus anders ausfallen, das gehört einfach dazu.</p>
+      <p class="note">Dein ausführliches Ergebnis (der mehrseitige Report von 16personalities.com) lädst du dir bitte separat als eigene PDF-Datei herunter und lädst diese zusätzlich hoch. Hier trägst du nur den Kurzcode ein.</p>
+      <p class="c16-source">Quelle: 16Personalities / NERIS Type Explorer®-Framework, NERIS Analytics Limited. Ergebnis bitte als Reflexionsimpuls verstehen, nicht als feste Zuordnung.</p>
+    </div>
+  </div>
+
+  <div class="cta-row">
+    <button id="evalBtn" type="button">Auswertung anzeigen</button>
+  </div>
+  <p id="hint">Bitte beantworte noch alle Fragen aus Teil A und B, bevor du die Auswertung siehst.</p>
+
+  <div id="results">
+    <div class="result-card">
+      <h2><svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15 8.5 22 9.3 17 14 18.2 21 12 17.7 5.8 21 7 14 2 9.3 9 8.5"/></svg>Dein Stärkenprofil</h2>
+      <p id="profileIntro" class="profile-intro"></p>
+      <div id="translateBlocks"></div>
+      <p class="detail-heading">Deine Einzelstärken im Detail</p>
+      <div id="topList"></div>
+    </div>
+    <div class="result-card">
+      <h2><svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="20" x2="5" y2="12"/><line x1="12" y1="20" x2="12" y2="7"/><line x1="19" y1="20" x2="19" y2="15"/></svg>Deine Arbeitsweise</h2>
+      <div id="workStyleBlocks"></div>
+      <p class="detail-heading">Alle Bereiche im Detail</p>
+      <div id="partBBars"></div>
+    </div>
+    <div class="result-card">
+      <h2><svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.4-9.5-9C.8 7.2 3 4 6.2 4c2 0 3.4 1.1 4.3 2.3C11.4 5.1 12.8 4 14.8 4 18 4 20.2 7.2 18.5 11c-2.5 4.6-6.5 9-6.5 9z"/></svg>Deine Interessen</h2>
+      <div id="interestResult"></div>
+    </div>
+    <div class="result-card" id="c16ResultCard" style="display:none;">
+      <h2><svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-6 8-6s8 2 8 6"/></svg>Dein Persönlichkeitstyp (freiwillig)</h2>
+      <div class="translate-block" id="c16ResultBlock"></div>
+    </div>
+    <div class="result-card">
+      <h2><svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="8" y1="16" x2="16" y2="16"/></svg>Deine Gesamtzusammenfassung</h2>
+      <textarea id="summaryText" readonly></textarea>
+      <div id="summaryPrintView" class="print-summary"></div>
+    </div>
+    <div class="cta-row">
+      <button id="printBtn" type="button">Ergebnis drucken / als PDF speichern</button>
+      <p class="note" style="margin-top:8px;">Wähle im Druckdialog als Ziel "Als PDF speichern" und aktiviere die Option "Hintergrundgrafiken", sonst fehlen die Farben.</p>
+    </div>
+  </div>
+
+  <p class="signature">© 2026 Insa Riese. Dieses Werk ist lizenziert unter CC BY-NC 4.0 (Erstellt mit KI-Unterstützung). Freie Vervielfältigung erlaubt, kommerzielle Nutzung untersagt.</p>
+
+</div>
+
+<script>
+const scaleLabels = ["trifft nicht zu", "trifft etwas zu", "trifft gut zu", "trifft sehr zu"];
+
+const clusters = [
+  {
+    key: "kommunikation",
+    title: "Kommunikation & Miteinander",
+    text: "Du bist jemand, der gut mit anderen zusammenarbeitet, sich traut zu sprechen und im Team eine verbindende Rolle einnehmen kann.",
+    tip: "Das passt zu Aufgaben wie: Ansprechpartner:in nach außen sein, Interviews führen, eine Gruppe anleiten, Ergebnisse präsentieren.",
+    trait: "kommunikativ und ein verbindendes Element in der Gruppe"
+  },
+  {
+    key: "organisation",
+    title: "Organisation & Verlässlichkeit",
+    text: "Du bist jemand, auf den sich andere verlassen können. Du behältst Termine und Aufgaben im Blick und bringst Struktur in eine Gruppe.",
+    tip: "Das passt zu Aufgaben wie: Projektplanung, den Zeitplan im Blick behalten, Material organisieren, den Überblick über Aufgaben im Team behalten.",
+    trait: "organisiert und verlässlich"
+  },
+  {
+    key: "kreativitaet",
+    title: "Kreativität & Gestaltung",
+    text: "Du hast ein gutes Gespür für Ideen und Gestaltung. Dir fällt auf, wie man etwas ansprechend und originell umsetzt.",
+    tip: "Das passt zu Aufgaben wie: Plakate oder Flyer gestalten, ein Logo entwerfen, Fotos und Videos bearbeiten, kreative Lösungen entwickeln.",
+    trait: "kreativ und gestalterisch"
+  },
+  {
+    key: "sprache",
+    title: "Sprache & Recherche",
+    text: "Du kannst Informationen gut aufbereiten und in eigenen Worten verständlich weitergeben.",
+    tip: "Das passt zu Aufgaben wie: Texte schreiben, zu einem Thema recherchieren, Interviews vorbereiten oder auswerten, übersetzen.",
+    trait: "sprachlich stark und recherchefreudig"
+  },
+  {
+    key: "technik",
+    title: "Technik & Praktisches",
+    text: "Du bist praktisch veranlagt, kommst gut mit digitalen Tools zurecht oder packst gerne handfest mit an.",
+    tip: "Das passt zu Aufgaben wie: technische Umsetzung, Aufbau vor Ort, digitale Tools bedienen, praktische Aktionen durchführen.",
+    trait: "praktisch veranlagt und technikaffin"
+  }
+];
+
+const partA = [
+  { label: "Kommunikationsfähigkeit", desc: "Du kannst deine Gedanken klar ausdrücken und anderen gut zuhören.", cluster: "kommunikation" },
+  { label: "Kontaktfreude (auf andere Menschen zugehen)", desc: "Du traust dich, fremde Menschen anzusprechen, z. B. bei einem Interview oder Besuch einer Einrichtung.", cluster: "kommunikation" },
+  { label: "Konfliktfähigkeit", desc: "Wenn es im Team mal knirscht, kannst du ruhig bleiben und nach einer Lösung suchen.", cluster: "kommunikation" },
+  { label: "Teamfähigkeit", desc: "Du arbeitest gerne mit anderen zusammen und teilst Aufgaben fair auf.", cluster: "kommunikation" },
+  { label: "Moderationsfähigkeit", desc: "Du kannst ein Gespräch oder eine Gruppenarbeit leiten, alle zu Wort kommen lassen und am Ende zusammenfassen.", cluster: "kommunikation" },
+  { label: "Präsentationsfähigkeit", desc: "Du kannst Ergebnisse vor anderen vorstellen, auch vor größeren Gruppen.", cluster: "kommunikation" },
+
+  { label: "Organisationsfähigkeit", desc: "Du behältst den Überblick, wer was bis wann macht.", cluster: "organisation" },
+  { label: "Zuverlässigkeit", desc: "Wenn du etwas zusagst, kann man sich darauf verlassen, dass es erledigt wird.", cluster: "organisation" },
+  { label: "Genaues Arbeiten", desc: "Du achtest auf Details und lieferst saubere, sorgfältige Ergebnisse.", cluster: "organisation" },
+  { label: "Zeitmanagement", desc: "Du planst deine Zeit selbst und hältst Fristen ein, auch ohne ständige Erinnerung.", cluster: "organisation" },
+  { label: "Verantwortungsbereitschaft", desc: "Du übernimmst gerne eine feste Aufgabe und stehst dafür ein.", cluster: "organisation" },
+
+  { label: "Kreativität", desc: "Dir fallen eigene Ideen und ungewöhnliche Lösungswege ein.", cluster: "kreativitaet" },
+  { label: "Gestalterisches Geschick (Layout, Design)", desc: "Du hast ein Gespür dafür, wie etwas optisch ansprechend aussieht, z. B. bei Plakaten oder Präsentationen.", cluster: "kreativitaet" },
+  { label: "Foto- und Videobearbeitung", desc: "Du kennst dich mit Kamera, Schnitt oder Bildbearbeitung aus oder lernst das schnell.", cluster: "kreativitaet" },
+  { label: "Handwerkliches Geschick", desc: "Du packst gerne praktisch mit an, baust oder reparierst etwas.", cluster: "kreativitaet" },
+
+  { label: "Schreibfähigkeit", desc: "Du kannst Texte verständlich und stimmig formulieren.", cluster: "sprache" },
+  { label: "Deutschkenntnisse (mündlich & schriftlich)", desc: "Du fühlst dich sicher, dich auf Deutsch auszudrücken, in Wort und Schrift.", cluster: "sprache" },
+  { label: "Weitere Sprachkenntnisse", desc: "Du sprichst noch eine andere Sprache, die im Projekt hilfreich sein könnte.", cluster: "sprache" },
+  { label: "Recherchefähigkeit", desc: "Du findest gute Quellen und kannst Informationen einordnen und vergleichen.", cluster: "sprache" },
+
+  { label: "Computer-/Medienkenntnisse", desc: "Du kommst gut mit Programmen, Apps oder digitalen Tools zurecht.", cluster: "technik" },
+  { label: "Körperbeherrschung/Sportlichkeit", desc: "Du bist sportlich aktiv oder körperlich fit, z. B. für Aktionen im Freien.", cluster: "technik" }
+];
+
+const interestThemes = [
+  { theme: "Umwelt & Nachhaltigkeit", example: "z. B. nachhaltiger Konsum, Klimaschutz vor Ort oder ein grünes Angebot an der Schule" },
+  { theme: "Soziales & Miteinander", example: "z. B. ein Angebot für jüngere Mitschüler:innen oder ein Projekt mit einer sozialen Einrichtung" },
+  { theme: "Geschichte & Erinnerung", example: "z. B. lokale Geschichte recherchieren oder Erinnerungsarbeit sichtbar machen" },
+  { theme: "Medien & Kommunikation", example: "z. B. ein Podcast, ein Video oder ein Beitrag zur Medienkompetenz" },
+  { theme: "Sport & Gesundheit", example: "z. B. ein Bewegungsangebot, ein Sportabzeichen-Projekt oder ein Gesundheitsthema" },
+  { theme: "Wirtschaft & Finanzen", example: "z. B. Finanzbildung weitergeben oder ein eigenes kleines Verkaufskonzept entwickeln" },
+  { theme: "Kultur & Kreatives", example: "z. B. Gestaltung, ein kreatives Format oder ein kulturelles Angebot" },
+  { theme: "Technik & Digitalisierung", example: "z. B. ein digitales Angebot, technische Unterstützung oder ein KI-nahes Thema" }
+];
+
+const c16Types = [
+  { code: "INTJ", name: "Architekt", group: "Analysten", desc: "Strategisch und unabhängig, denkt gerne in großen Plänen und Systemen." },
+  { code: "INTP", name: "Logiker", group: "Analysten", desc: "Neugierig und analytisch, geht Dingen gerne bis auf den Grund." },
+  { code: "ENTJ", name: "Kommandeur", group: "Analysten", desc: "Entscheidungsfreudig und zielstrebig, übernimmt gerne die Führung in einer Gruppe." },
+  { code: "ENTP", name: "Debattierer", group: "Analysten", desc: "Ideenreich und diskussionsfreudig, stellt Bestehendes gerne infrage." },
+  { code: "INFJ", name: "Advokat", group: "Diplomaten", desc: "Idealistisch und einfühlsam, denkt oft über den Sinn hinter den Dingen nach." },
+  { code: "INFP", name: "Mediator", group: "Diplomaten", desc: "Werteorientiert und kreativ, setzt sich gerne für eine gute Sache ein." },
+  { code: "ENFJ", name: "Protagonist", group: "Diplomaten", desc: "Mitreißend und engagiert, motiviert andere gerne für gemeinsame Ziele." },
+  { code: "ENFP", name: "Aktivist", group: "Diplomaten", desc: "Begeisterungsfähig und offen, hat viele Ideen und liebt neue Möglichkeiten." },
+  { code: "ISTJ", name: "Logistiker", group: "Wächter", desc: "Verlässlich und strukturiert, hält sich gerne an klare Abläufe." },
+  { code: "ISFJ", name: "Verteidiger", group: "Wächter", desc: "Fürsorglich und gewissenhaft, kümmert sich zuverlässig um andere." },
+  { code: "ESTJ", name: "Exekutive", group: "Wächter", desc: "Organisiert und durchsetzungsstark, behält gerne den Überblick im Team." },
+  { code: "ESFJ", name: "Konsul", group: "Wächter", desc: "Hilfsbereit und gesellig, sorgt gerne für ein gutes Miteinander." },
+  { code: "ISTP", name: "Virtuose", group: "Forscher", desc: "Praktisch und ruhig, probiert Dinge gerne selbst aus." },
+  { code: "ISFP", name: "Abenteurer", group: "Forscher", desc: "Künstlerisch und flexibel, entdeckt gerne Neues auf eigene Faust." },
+  { code: "ESTP", name: "Unternehmer", group: "Forscher", desc: "Mutig und spontan, packt gerne direkt an, statt lange zu planen." },
+  { code: "ESFP", name: "Entertainer", group: "Forscher", desc: "Lebendig und kontaktfreudig, bringt gerne Schwung in eine Gruppe." }
+];
+
+const c16Groups = {
+  "Analysten": {
+    note: "Menschen mit diesem Profil gehen Aufgaben oft strukturiert und logisch an und behalten gerne den Gesamtüberblick.",
+    icon: '<svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><line x1="4" y1="10" x2="20" y2="10"/><line x1="10" y1="10" x2="10" y2="20"/></svg>'
+  },
+  "Diplomaten": {
+    note: "Menschen mit diesem Profil legen oft Wert auf Sinn und Miteinander und bringen viel Einfühlungsvermögen in ein Team.",
+    icon: '<svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.4-9.5-9C.8 7.2 3 4 6.2 4c2 0 3.4 1.1 4.3 2.3C11.4 5.1 12.8 4 14.8 4 18 4 20.2 7.2 18.5 11c-2.5 4.6-6.5 9-6.5 9z"/></svg>'
+  },
+  "Wächter": {
+    note: "Menschen mit diesem Profil sind oft verlässlich und sorgen gerne für einen geordneten Ablauf.",
+    icon: '<svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/></svg>'
+  },
+  "Forscher": {
+    note: "Menschen mit diesem Profil probieren gerne praktisch aus und reagieren spontan und flexibel auf neue Situationen.",
+    icon: '<svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><line x1="12" y1="4" x2="12" y2="8"/><line x1="12" y1="16" x2="12" y2="20"/><line x1="4" y1="12" x2="8" y2="12"/><line x1="16" y1="12" x2="20" y2="12"/></svg>'
+  }
+};
+
+const partB = [
+  { key: "Rezeption", text: "Ich kann Informationen aus verschiedenen Quellen recherchieren, vergleichen und einordnen.", trait: "recherchierst gründlich, bevor du loslegst",
+    desc: "Du gehst Aufgaben gerne gründlich an und schaust dir verschiedene Quellen genau an, bevor du dir eine Meinung bildest.",
+    tip: "Das passt zu Aufgaben wie: Recherche, Quellenarbeit oder Hintergrundwissen für ein Konzept zusammentragen." },
+  { key: "Produktion", text: "Ich traue mir zu, eigene Ideen zu entwickeln, zu planen und umzusetzen.", trait: "hast eigene Ideen und setzt sie gerne um",
+    desc: "Du hast eigene Ideen und traust dir zu, sie auch wirklich umzusetzen, statt nur abzuwarten.",
+    tip: "Das passt zu Aufgaben wie: ein eigenes Konzept entwickeln, ein Format entwerfen oder ein Produkt von Anfang bis Ende mitgestalten." },
+  { key: "BNE", text: "Ich interessiere mich dafür, wie ich mit meinem Handeln etwas für andere oder die Gesellschaft bewirken kann.", trait: "denkst gerne darüber nach, was dein Handeln bewirkt",
+    desc: "Dich beschäftigt, was euer Projekt bei anderen oder in der Gesellschaft tatsächlich bewirkt.",
+    tip: "Das passt gut, wenn du im Team immer wieder fragst, welchen echten Nutzen das Projekt für andere hat, nicht nur, dass es fertig wird." },
+  { key: "Selbststeuerung", text: "Ich kann mir selbst Ziele setzen und einen Zeitplan eigenständig einhalten.", trait: "arbeitest gut eigenständig auf ein Ziel hin",
+    desc: "Du kannst dir selbst Ziele setzen und eigenständig auf einen Zeitplan hinarbeiten, ohne dass dich jemand ständig erinnern muss.",
+    tip: "Das passt zu Aufgaben, bei denen du über einen längeren Zeitraum selbstständig an einem Teilbereich dranbleibst." },
+  { key: "Reflexion", text: "Ich kann im Rückblick einschätzen, was bei einer Aufgabe gut oder weniger gut gelaufen ist.", trait: "schaust gut zurück, was funktioniert hat und was nicht",
+    desc: "Du kannst gut einschätzen, was bei einer Aufgabe gut oder weniger gut gelaufen ist, und daraus lernen.",
+    tip: "Das passt zu Aufgaben wie: Zwischenreflexionen, Auswertungen oder dokumentieren, was im Projekt funktioniert hat." }
+];
+
+function renderScale(name) {
+  let html = '<div class="scale">';
+  for (let i = 1; i <= 4; i++) {
+    const id = name + "_" + i;
+    html += `<input type="radio" id="${id}" name="${name}" value="${i}">`
+          + `<label for="${id}">${scaleLabels[i-1]}</label>`;
+  }
+  html += '</div>';
+  return html;
+}
+
+function buildPartA() {
+  const container = document.getElementById("partA");
+  clusters.forEach(cluster => {
+    const heading = document.createElement("p");
+    heading.className = "cluster-heading";
+    heading.textContent = cluster.title;
+    container.appendChild(heading);
+
+    partA.forEach((item, idx) => {
+      if (item.cluster !== cluster.key) return;
+      const name = "a" + idx;
+      const div = document.createElement("div");
+      div.className = "item";
+      div.innerHTML = `<span class="item-label">${item.label}</span><span class="item-desc">${item.desc}</span>` + renderScale(name);
+      container.appendChild(div);
+    });
+  });
+}
+
+function buildPartB() {
+  const container = document.getElementById("partB");
+  partB.forEach((entry, idx) => {
+    const name = "b" + idx;
+    const div = document.createElement("div");
+    div.className = "item";
+    div.innerHTML = `<span class="item-label">${entry.text}</span>` + renderScale(name);
+    container.appendChild(div);
+  });
+}
+
+function buildInterests() {
+  const container = document.getElementById("interestChips");
+  interestThemes.forEach((item, idx) => {
+    const id = "interest_" + idx;
+    const input = document.createElement("input");
+    input.type = "checkbox";
+    input.id = id;
+    input.value = item.theme;
+    const label = document.createElement("label");
+    label.setAttribute("for", id);
+    label.textContent = item.theme;
+    container.appendChild(input);
+    container.appendChild(label);
+  });
+}
+
+function buildTop3() {
+  const container = document.getElementById("top3Chips");
+  const hint = document.getElementById("top3Hint");
+  partA.forEach((item, idx) => {
+    const id = "top3_" + idx;
+    const input = document.createElement("input");
+    input.type = "checkbox";
+    input.id = id;
+    input.value = item.label;
+    const label = document.createElement("label");
+    label.setAttribute("for", id);
+    label.textContent = item.label;
+    container.appendChild(input);
+    container.appendChild(label);
+  });
+  container.addEventListener("change", (e) => {
+    const checked = container.querySelectorAll("input:checked");
+    if (checked.length > 3) {
+      e.target.checked = false;
+      hint.style.display = "block";
+    } else {
+      hint.style.display = "none";
+    }
+  });
+}
+
+function buildC16Select() {
+  const select = document.getElementById("c16Type");
+  const desc = document.getElementById("c16Desc");
+  let currentGroup = "";
+  c16Types.forEach(t => {
+    if (t.group !== currentGroup) {
+      currentGroup = t.group;
+      const group = document.createElement("optgroup");
+      group.label = currentGroup;
+      group.id = "grp-" + currentGroup;
+      select.appendChild(group);
+    }
+    const opt = document.createElement("option");
+    opt.value = t.code;
+    opt.textContent = `${t.code} — ${t.name}`;
+    select.querySelector("#grp-" + currentGroup).appendChild(opt);
+  });
+  select.addEventListener("change", () => {
+    const match = c16Types.find(t => t.code === select.value);
+    if (match) {
+      desc.textContent = `${match.name}: ${match.desc}`;
+      desc.style.display = "block";
+    } else {
+      desc.style.display = "none";
+    }
+  });
+}
+
+buildPartA();
+buildPartB();
+buildInterests();
+buildTop3();
+buildC16Select();
+
+// Lokales Speichern der Antworten im Browser (localStorage), damit sie beim
+// erneuten Öffnen derselben Datei im selben Browser wieder da sind.
+const STORAGE_KEY = "projektZukunftStaerkenFragebogen_v1";
+
+function saveState() {
+  const state = { radios: {}, checkboxes: [], texts: {} };
+  document.querySelectorAll('input[type="radio"]:checked').forEach(r => state.radios[r.name] = r.value);
+  document.querySelectorAll('input[type="checkbox"]:checked').forEach(c => state.checkboxes.push(c.id));
+  document.querySelectorAll('input[type="text"], textarea, select').forEach(el => state.texts[el.id] = el.value);
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) { /* Speicher evtl. nicht verfügbar */ }
+}
+
+function restoreState() {
+  let raw;
+  try { raw = localStorage.getItem(STORAGE_KEY); } catch (e) { return; }
+  if (!raw) return;
+  let state;
+  try { state = JSON.parse(raw); } catch (e) { return; }
+
+  Object.entries(state.radios || {}).forEach(([name, value]) => {
+    const el = document.querySelector(`input[name="${name}"][value="${value}"]`);
+    if (el) el.checked = true;
+  });
+  (state.checkboxes || []).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.checked = true;
+  });
+  Object.entries(state.texts || {}).forEach(([id, value]) => {
+    const el = document.getElementById(id);
+    if (el) el.value = value;
+  });
+  const c16TypeEl = document.getElementById("c16Type");
+  if (c16TypeEl && c16TypeEl.value) c16TypeEl.dispatchEvent(new Event("change"));
+
+  const banner = document.getElementById("restoreBanner");
+  if (banner) banner.style.display = "block";
+}
+
+document.addEventListener("change", saveState);
+document.addEventListener("input", saveState);
+restoreState();
+
+document.getElementById("resetBtn").addEventListener("click", () => {
+  if (confirm("Wirklich alle gespeicherten Antworten auf diesem Gerät löschen und neu beginnen?")) {
+    try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+    location.reload();
+  }
+});
+
+function getValue(name) {
+  const checked = document.querySelector(`input[name="${name}"]:checked`);
+  return checked ? parseInt(checked.value, 10) : null;
+}
+
+document.getElementById("evalBtn").addEventListener("click", () => {
+  const aValues = partA.map((item, idx) => ({ ...item, value: getValue("a" + idx) }));
+  const bValues = partB.map((entry, idx) => ({ ...entry, value: getValue("b" + idx) }));
+
+  const missing = aValues.some(v => v.value === null) || bValues.some(v => v.value === null);
+  const hint = document.getElementById("hint");
+  if (missing) {
+    hint.style.display = "block";
+    return;
+  }
+  hint.style.display = "none";
+
+  // Persönlicher Gesamtschnitt als Bezugspunkt (statt fester Schwelle)
+  const avgAll = aValues.reduce((sum, v) => sum + v.value, 0) / aValues.length;
+  const aWithDeviation = aValues.map(v => ({ ...v, deviation: v.value - avgAll }));
+
+  // Forced-Choice-Auswahl auslesen (max. 3, aus Teil A)
+  const forcedChoice = partA
+    .filter((item, idx) => document.getElementById("top3_" + idx).checked)
+    .map(item => item.label);
+
+  // Top-Einzelstärken relativ zum eigenen Schnitt, nicht am starren Cutoff
+  const sortedByDeviation = [...aWithDeviation].sort((x, y) => y.deviation - x.deviation || y.value - x.value);
+  const topItems = sortedByDeviation.slice(0, 5);
+  const confirmedCount = topItems.filter(v => forcedChoice.includes(v.label)).length;
+
+  const topList = document.getElementById("topList");
+  topList.innerHTML = "";
+  const existingNote = document.getElementById("topNote");
+  if (existingNote) existingNote.remove();
+  topItems.forEach(v => {
+    const pct = Math.round((v.value / 4) * 100);
+    const row = document.createElement("div");
+    row.className = "strength-row";
+    row.innerHTML = `<span class="strength-label">${v.label}${forcedChoice.includes(v.label) ? '<span class="strength-check">✓</span>' : ""}</span>
+      <span class="strength-track"><span class="strength-fill" style="width:${pct}%"></span></span>
+      <span class="strength-pct">${pct}%</span>`;
+    topList.appendChild(row);
+  });
+  const topNote = document.createElement("p");
+  topNote.id = "topNote";
+  topNote.className = "note";
+  if (forcedChoice.length === 3 && confirmedCount >= 2) {
+    topNote.textContent = "Das deckt sich weitgehend mit deiner eigenen Einschätzung (✓ = auch bei deiner Dreier-Auswahl dabei).";
+  } else if (forcedChoice.length === 3 && confirmedCount === 0) {
+    topNote.textContent = "Deine eigene Dreier-Auswahl weicht von der Berechnung ab. Beides ist in Ordnung, schau, welche Liste sich für dich stimmiger anfühlt.";
+  } else {
+    topNote.textContent = "";
+  }
+  if (topNote.textContent) topList.after(topNote);
+
+  // Cluster-Stärken relativ zum eigenen Schnitt berechnen
+  const clusterScores = clusters.map(c => {
+    const items = aWithDeviation.filter(v => v.cluster === c.key);
+    const avg = items.reduce((sum, v) => sum + v.value, 0) / items.length;
+    return { ...c, avg, deviation: avg - avgAll, items };
+  });
+  const sortedClusters = [...clusterScores].sort((x, y) => y.deviation - x.deviation);
+  const strongClusters = sortedClusters.filter(c => c.deviation >= 0.3);
+  let topClusters;
+  if (strongClusters.length >= 2) {
+    topClusters = strongClusters.slice(0, 2);
+    if (strongClusters[2] && (strongClusters[1].deviation - strongClusters[2].deviation) <= 0.15) {
+      topClusters.push(strongClusters[2]);
+    }
+  } else if (strongClusters.length === 1) {
+    topClusters = strongClusters;
+  } else {
+    topClusters = sortedClusters.slice(0, 2);
+  }
+
+  // Auffälligste Arbeitsweise-Dimension für die Synthese
+  const avgB = bValues.reduce((sum, v) => sum + v.value, 0) / bValues.length;
+  const bSorted = [...bValues].sort((x, y) => (y.value - avgB) - (x.value - avgB) || y.value - x.value);
+  const leadB = bSorted[0];
+
+  // Einleitender Profil-Absatz
+  const profileIntro = document.getElementById("profileIntro");
+  const clusterNamesText = topClusters.map(c => c.title).join(" und ");
+  const traitPhrase = topClusters.map(c => c.trait).join(" und gleichzeitig ");
+  let introText = `<strong>Dein Stärkenprofil ist vor allem geprägt von ${clusterNamesText}.</strong> `;
+  introText += `Kurz gesagt: Du bist ${traitPhrase}.`;
+  if (leadB && leadB.value >= 3) {
+    introText += ` Bei der Arbeitsweise zeigt sich das besonders so: Du ${leadB.trait}.`;
+  }
+  profileIntro.innerHTML = introText;
+
+  const translateContainer = document.getElementById("translateBlocks");
+  translateContainer.innerHTML = "";
+  topClusters.forEach(c => {
+    const evidence = [...c.items].sort((x, y) => y.deviation - x.deviation || y.value - x.value).slice(0, 2);
+    const evidenceNames = evidence.map(e => e.label).join(", ");
+    const block = document.createElement("div");
+    block.className = "translate-block";
+    block.innerHTML = `<h3>${c.title}</h3><p>${c.text}</p><p class="tip">${c.tip}</p><p class="cluster-evidence">Das zeigt sich bei dir besonders bei: ${evidenceNames}.</p>`;
+    translateContainer.appendChild(block);
+  });
+
+
+  const barsContainer = document.getElementById("partBBars");
+  barsContainer.innerHTML = "";
+  bValues.forEach(v => {
+    const pct = (v.value / 4) * 100;
+    const row = document.createElement("div");
+    row.className = "bar-row";
+    row.innerHTML = `<span class="bar-label">${v.key}</span>
+      <span class="bar-track"><span class="bar-fill" style="width:${pct}%"></span></span>
+      <span>${scaleLabels[v.value - 1]}</span>`;
+    barsContainer.appendChild(row);
+  });
+
+  // Arbeitsweise als Synthese statt nur Balken
+  const bWithDeviation = bValues.map(v => ({ ...v, deviation: v.value - avgB }));
+  const sortedBDeviation = [...bWithDeviation].sort((x, y) => y.deviation - x.deviation || y.value - x.value);
+  const strongB = sortedBDeviation.filter(v => v.deviation >= 0.3 && v.value >= 3);
+  const topB = strongB.length ? strongB.slice(0, 2) : sortedBDeviation.slice(0, 1);
+
+  const workStyleContainer = document.getElementById("workStyleBlocks");
+  workStyleContainer.innerHTML = "";
+  topB.forEach(v => {
+    const block = document.createElement("div");
+    block.className = "translate-block";
+    block.innerHTML = `<h3>${v.key}</h3><p>${v.desc}</p><p class="tip">${v.tip}</p>`;
+    workStyleContainer.appendChild(block);
+  });
+
+  // Interessen auswerten
+  const selectedThemes = interestThemes.filter((item, idx) =>
+    document.getElementById("interest_" + idx).checked
+  );
+  const interestFree = document.getElementById("interestFree").value.trim();
+  const problemFree = document.getElementById("problemFree").value.trim();
+
+  const interestResult = document.getElementById("interestResult");
+  let interestHtml = "";
+  if (selectedThemes.length) {
+    interestHtml += selectedThemes.map(item =>
+      `<div class="translate-block"><h3>${item.theme}</h3><p class="tip">${item.example}</p></div>`
+    ).join("");
+  } else {
+    interestHtml += '<p class="note">Keine Themenfelder ausgewählt.</p>';
+  }
+  if (interestFree) {
+    interestHtml += `<p style="margin-top:12px;"><strong>Beschäftigt mich besonders:</strong> ${interestFree}</p>`;
+  }
+  if (problemFree) {
+    interestHtml += `<p><strong>Das würde ich gerne verbessern:</strong> ${problemFree}</p>`;
+  }
+  interestResult.innerHTML = interestHtml;
+
+  // 16personalities-Ergebnis (freiwillig)
+  const c16Type = document.getElementById("c16Type").value;
+  const c16Variant = document.getElementById("c16Variant").value;
+  const c16Full = c16Type ? (c16Type + (c16Variant ? "-" + c16Variant : "")) : "";
+  const c16Card = document.getElementById("c16ResultCard");
+  const c16Block = document.getElementById("c16ResultBlock");
+  if (c16Type) {
+    const match = c16Types.find(t => t.code === c16Type);
+    const groupInfo = match ? c16Groups[match.group] : null;
+    const variantLabel = c16Variant === "A" ? "Assertive" : c16Variant === "T" ? "Turbulent" : "";
+    c16Card.style.display = "block";
+    c16Block.innerHTML = `<h3>${c16Full}${match ? " — " + match.name : ""}${variantLabel ? " (" + variantLabel + ")" : ""}</h3>
+      <p>${match ? match.desc : ""}</p>
+      ${groupInfo ? `<p class="tip">${groupInfo.icon} ${groupInfo.note}</p>` : ""}
+      <p class="cluster-evidence">Momentaufnahme: An einem anderen Tag oder in anderer Stimmung kann der Test auch anders ausfallen.</p>`;
+  } else {
+    c16Card.style.display = "none";
+  }
+
+  const summary = document.getElementById("summaryText");
+  const profileIntroPlain = profileIntro.textContent;
+  const topNames = topItems.map(v => v.label).join(", ");
+  const bLines = bValues.map(v => `${v.key}: ${scaleLabels[v.value - 1]}`).join(" | ");
+  const themeLine = selectedThemes.length ? selectedThemes.map(t => t.theme).join(", ") : "keine Angabe";
+
+  let summaryText =
+`Mein Stärkenprofil: ${profileIntroPlain}
+
+Einzelstärken im Detail: ${topNames}
+
+Meine Arbeitsweise: ${bLines}
+
+Meine Interessen: ${themeLine}`;
+  if (interestFree) summaryText += `\nBeschäftigt mich besonders: ${interestFree}`;
+  if (problemFree) summaryText += `\nDas würde ich gerne verbessern: ${problemFree}`;
+  if (c16Full) summaryText += `\n\nMein 16personalities-Typ: ${c16Full} (Momentaufnahme)`;
+  summaryText += `\n\n(ausgefüllt mit dem Stärken-Fragebogen, Projekt Zukunft, Klasse 10)`;
+  summary.value = summaryText;
+  document.getElementById("summaryPrintView").textContent = summaryText;
+
+  document.getElementById("results").style.display = "block";
+  document.getElementById("results").scrollIntoView({ behavior: "smooth" });
+});
+
+document.getElementById("printBtn").addEventListener("click", () => {
+  const results = document.getElementById("results");
+  if (results.style.display !== "block") {
+    document.getElementById("evalBtn").click();
+  }
+  if (results.style.display === "block") {
+    window.print();
+  } else {
+    document.getElementById("hint").scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+});
+</script>
+</body>
+</html>
