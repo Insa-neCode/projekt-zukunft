@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="de"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projekt Zukunft – Projektbibliothek Klasse 10 · 2026/27</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap');
+  :root {
+    --gruen:#2D6A4F; --gruen-hell:#B7E4C7; --gruen-mittel:#52B788;
+    --gelb:#D97706; --rot:#DC2626; --dunkel:#1B1B1B; --grau:#6B7280;
+    --hintergrund:#F8FAF8; --weiss:#fff; --border:#D1E8D8;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'DM Sans',sans-serif;background:var(--hintergrund);color:var(--dunkel);font-size:15px;line-height:1.6;}
+
+  /* HEADER */
+  .header{background:var(--gruen);color:#fff;padding:48px 40px 40px;position:relative;overflow:hidden;}
+  .header::before{content:'';position:absolute;top:-60px;right:-60px;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,.05);}
+  .header-label{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gruen-hell);margin-bottom:12px;}
+  .header h1{font-family:'DM Serif Display',serif;font-size:36px;font-weight:400;line-height:1.2;margin-bottom:16px;}
+  .header p{font-size:15px;color:rgba(255,255,255,.8);max-width:620px;line-height:1.7;}
+
+  /* RAHMEN */
+  .rahmen{background:#fff;border-bottom:1px solid var(--border);padding:24px 40px;display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+  .rahmen-label{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--grau);display:block;margin-bottom:3px;}
+  .rahmen-wert{font-size:14px;font-weight:700;color:var(--dunkel);}
+
+  /* JAHRESPLAN */
+  .jahresplan{background:#fff;border-bottom:2px solid var(--gruen-hell);padding:32px 40px;}
+  .jahresplan h2{font-family:'DM Serif Display',serif;font-size:22px;font-weight:400;color:var(--gruen);margin-bottom:24px;}
+  .timeline{display:flex;flex-direction:column;gap:0;position:relative;}
+  .timeline::before{content:'';position:absolute;left:128px;top:0;bottom:0;width:2px;background:var(--gruen-hell);}
+  .tl-item{display:flex;gap:20px;align-items:flex-start;padding:10px 0;position:relative;}
+  .tl-datum{width:118px;flex-shrink:0;font-size:12px;font-weight:700;color:var(--grau);text-align:right;padding-top:3px;}
+  .tl-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0;margin-top:4px;position:relative;z-index:1;border:2px solid #fff;}
+  .tl-dot.milestone{background:var(--gruen);box-shadow:0 0 0 2px var(--gruen);}
+  .tl-dot.benotet{background:var(--gelb);box-shadow:0 0 0 2px var(--gelb);}
+  .tl-dot.ferien{background:#D1D5DB;box-shadow:0 0 0 2px #D1D5DB;}
+  .tl-dot.abschluss{background:var(--rot);box-shadow:0 0 0 2px var(--rot);}
+  .tl-content{flex:1;}
+  .tl-titel{font-size:14px;font-weight:700;}
+  .tl-titel.c-benotet{color:#92400E;}
+  .tl-titel.c-ferien{color:var(--grau);font-weight:400;}
+  .tl-titel.c-abschluss{color:var(--rot);}
+  .tl-desc{font-size:13px;color:#374151;margin-top:2px;line-height:1.5;}
+  .tl-badge{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:4px;margin-top:5px;}
+  .tl-badge.b-gruen{background:var(--gruen-hell);color:var(--gruen);}
+  .tl-badge.b-gelb{background:#FEF3C7;color:#92400E;}
+  .tl-badge.b-rot{background:#FEE2E2;color:var(--rot);}
+  .legende{display:flex;flex-wrap:wrap;gap:16px;margin-top:20px;padding-top:16px;border-top:1px solid var(--border);}
+  .leg-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--grau);}
+  .leg-dot{width:10px;height:10px;border-radius:50%;}
+
+  /* CONTAINER */
+  .container{max-width:900px;margin:0 auto;padding:40px;}
+
+  /* INFO-BOX */
+  .info-box{background:#fff;border:1px solid var(--border);border-radius:12px;padding:28px;margin-bottom:32px;}
+  .info-box.warn{background:#FFFBEB;border-color:#FDE68A;}
+  .info-box h2{font-family:'DM Serif Display',serif;font-size:20px;font-weight:400;color:var(--gruen);margin-bottom:14px;}
+  .info-box.warn h2{color:#92400E;}
+  .zwei-spalten{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:14px;}
+  .spalte{background:var(--hintergrund);border-radius:8px;padding:16px;}
+  .spalte.warn-bg{background:#FEF9EC;}
+  .spalte strong{display:block;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gruen);margin-bottom:8px;}
+  .spalte.warn-bg strong{color:#92400E;}
+  .spalte ul{list-style:none;display:flex;flex-direction:column;gap:4px;font-size:13px;color:#374151;}
+  .spalte.warn-bg ul{color:#92400E;}
+  .spalte ul li::before{content:'→ ';color:var(--gruen-mittel);font-weight:700;}
+  .spalte.warn-bg ul li::before{color:#D97706;}
+
+  /* PROJEKT-KARTE */
+  .projekt{background:#fff;border:1px solid var(--border);border-radius:12px;margin-bottom:32px;overflow:hidden;}
+  .projekt-summary:hover{background:var(--hintergrund);}
+  .projekt-nr{width:42px;height:42px;border-radius:10px;background:var(--gruen);color:#fff;font-family:'DM Serif Display',serif;font-size:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .projekt-titel{font-family:'DM Serif Display',serif;font-size:22px;font-weight:400;color:var(--dunkel);line-height:1.2;}
+  .projekt-sub{font-size:13px;color:var(--grau);margin-top:4px;}
+  .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;}
+  .tag{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;background:var(--gruen-hell);color:var(--gruen);}
+  .tag.ort{background:#FEF3C7;color:#92400E;}
+  .tag.winter{background:#DBEAFE;color:#1E40AF;}
+  .projekt-body{padding:24px 28px;display:flex;flex-direction:column;gap:20px;}
+  .abschnitt{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--grau);margin-bottom:8px;}
+  .beschreibung{font-size:14px;line-height:1.7;color:#374151;}
+
+  /* VARIANTEN */
+  .varianten{display:flex;flex-direction:column;gap:10px;}
+  .variante{background:var(--hintergrund);border-radius:8px;padding:14px 16px;border-left:3px solid var(--gruen-mittel);}
+  .variante strong{font-size:13px;font-weight:700;color:var(--gruen);display:block;margin-bottom:4px;}
+  .variante p{font-size:13px;color:#374151;line-height:1.6;}
+
+  /* ROLLEN */
+  .rollen-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}
+  .rolle{background:#fff;border:1px solid var(--border);border-radius:8px;padding:10px 14px;font-size:13px;}
+  .rolle::before{content:'👤 ';font-size:12px;}
+
+  /* CHECKPOINTS */
+  .checkpoints{display:flex;flex-direction:column;gap:8px;}
+  .cp{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:#fff;border:1px solid var(--border);border-radius:8px;}
+  .cp-phase{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#fff;background:var(--gruen);padding:2px 8px;border-radius:4px;white-space:nowrap;flex-shrink:0;}
+  .cp-phase.gelb{background:var(--gelb);}
+  .cp-phase.rot{background:var(--rot);}
+  .cp-datum{font-size:11px;font-weight:700;color:var(--gruen);background:var(--gruen-hell);padding:2px 8px;border-radius:4px;white-space:nowrap;flex-shrink:0;}
+  .cp-datum.gelb{color:#92400E;background:#FEF3C7;}
+  .cp-datum.rot{color:var(--rot);background:#FEE2E2;}
+  .cp-text{font-size:13px;color:#374151;line-height:1.5;}
+  .cp-text strong{display:block;margin-bottom:2px;}
+  .cp-abgabe{font-size:12px;font-weight:600;color:var(--gruen);margin-top:4px;}
+  .cp-abgabe.gelb{color:#D97706;}
+  .cp-abgabe.rot{color:var(--rot);}
+
+  /* MATERIALIEN */
+  .mat-liste{display:flex;flex-direction:column;gap:6px;}
+  .mat-item{font-size:13px;display:flex;align-items:flex-start;gap:8px;color:#374151;}
+  .mat-item::before{content:'📎';font-size:13px;flex-shrink:0;margin-top:1px;}
+  .mat-item a{color:var(--gruen);text-decoration:none;font-weight:500;}
+  .mat-item a:hover{text-decoration:underline;}
+
+  .hinweis{background:#FFFBEB;border:1px solid #FDE68A;border-radius:8px;padding:12px 16px;font-size:13px;color:#92400E;}
+
+  /* ACCORDION */
+  .projekt-summary{
+    list-style:none;
+    padding:24px 28px;
+    cursor:pointer;
+    display:flex;
+    align-items:flex-start;
+    gap:16px;
+    user-select:none;
+  }
+  .projekt-summary::-webkit-details-marker{display:none;}
+  .projekt-summary::marker{display:none;}
+  .projekt details{border-radius:12px;overflow:hidden;}
+  .projekt details[open] .projekt-summary{border-bottom:1px solid var(--border);}
+  .toggle-icon{
+    margin-left:auto;
+    flex-shrink:0;
+    width:28px;height:28px;
+    border-radius:50%;
+    background:var(--gruen-hell);
+    color:var(--gruen);
+    display:flex;align-items:center;justify-content:center;
+    font-size:16px;
+    font-weight:700;
+    transition:transform 0.2s;
+    padding-top:1px;
+  }
+  details[open] .toggle-icon{transform:rotate(45deg);}
+  .projekt-preview{font-size:13px;color:var(--grau);margin-top:6px;line-height:1.5;}
+
+  hr.section{border:none;border-top:2px solid var(--gruen-hell);margin:40px 0;}
+
+  .footer{background:var(--gruen);color:rgba(255,255,255,.8);padding:28px 40px;text-align:center;font-size:13px;margin-top:40px;line-height:1.8;}
+  .footer strong{color:#fff;}
+
+  /* TABLET (768px und kleiner) */
+  @media(max-width:768px){
+    .header{padding:32px 24px 28px;}
+    .header h1{font-size:28px;}
+    .rahmen{grid-template-columns:1fr 1fr;padding:20px 24px;gap:16px;}
+    .jahresplan{padding:24px 24px;}
+    .container{padding:24px 24px;}
+    .zwei-spalten{grid-template-columns:1fr;}
+    .rollen-grid{grid-template-columns:1fr;}
+    .projekt-summary{padding:20px 20px;}
+    .projekt-body{padding:20px 20px;}
+    .info-box{padding:20px;}
+    .cp{flex-wrap:wrap;gap:6px;}
+    .cp-phase,.cp-datum{flex-shrink:0;}
+    .footer{padding:24px;}
+  }
+
+  /* MOBIL (480px und kleiner) */
+  @media(max-width:480px){
+    .header{padding:24px 16px;}
+    .header h1{font-size:24px;}
+    .header p{font-size:14px;}
+    .rahmen{grid-template-columns:1fr 1fr;padding:16px;}
+    .jahresplan{padding:20px 16px;}
+    .container{padding:16px;}
+    .timeline::before{left:88px;}
+    .tl-datum{width:78px;font-size:10px;}
+    .tl-dot{margin-top:5px;}
+    .projekt-summary{padding:16px;}
+    .projekt-body{padding:16px;}
+    .projekt-titel{font-size:18px;}
+    .tags{gap:4px;}
+    .tag{font-size:10px;padding:2px 8px;}
+    .info-box{padding:16px;}
+    .zwei-spalten{grid-template-columns:1fr;}
+    .rollen-grid{grid-template-columns:1fr;}
+    .cp{flex-wrap:wrap;gap:6px;}
+    .footer{padding:20px 16px;font-size:12px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-label">Gesamtschule Pulheim · Jahrgang 10 · Schuljahr 2026/27</div>
+  <h1>Projekt Zukunft<br>Projektbibliothek</h1>
+  <p>Such dir ein Thema aus, das dich wirklich interessiert — und das anderen Menschen nützt. Alle Projekte finden mittwochs statt und folgen demselben Jahresrhythmus mit vier festen Abgabeterminen.</p>
+</div>
+
+<!-- RAHMEN -->
+<div class="rahmen">
+  <div><span class="rahmen-label">Schuljahr</span><span class="rahmen-wert">2026/27</span></div>
+  <div><span class="rahmen-label">Projekttag</span><span class="rahmen-wert">Jeden Mittwoch</span></div>
+  <div><span class="rahmen-label">Teamgröße</span><span class="rahmen-wert">1 bis 4 Personen</span></div>
+  <div><span class="rahmen-label">Rahmen</span><span class="rahmen-wert">BNE &amp; Verantwortung</span></div>
+</div>
+
+<!-- JAHRESPLAN -->
+<div class="jahresplan">
+  <h2>Dein Projektjahr auf einen Blick — alle Termine</h2>
+  <div class="timeline">
+
+    <div class="tl-item">
+      <div class="tl-datum">Sept. 2026</div>
+      <div class="tl-dot milestone"></div>
+      <div class="tl-content">
+        <div class="tl-titel">Projektstart &amp; Themenwahl</div>
+        <div class="tl-desc">Projektbibliothek kennenlernen, Thema &amp; Team wählen, erste Recherche starten.</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-datum">17.–31.10.2026</div>
+      <div class="tl-dot ferien"></div>
+      <div class="tl-content"><div class="tl-titel c-ferien">🍂 Herbstferien NRW</div></div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-datum">Mi, 04.11.2026</div>
+      <div class="tl-dot benotet"></div>
+      <div class="tl-content">
+        <div class="tl-titel c-benotet">⭐ Checkpoint 1 — Benotet</div>
+        <div class="tl-desc">Vorrecherche abgeschlossen. Projekt konkret geplant: Thema, Partner, Rollen, Zeitplan stehen fest. Erster Mittwoch nach den Herbstferien.</div>
+        <span class="tl-badge b-gelb">📋 Abgabe: Projektmappe Teil 1 — Planung &amp; Recherche</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-datum">Nov.–Dez. 2026</div>
+      <div class="tl-dot milestone"></div>
+      <div class="tl-content">
+        <div class="tl-titel">Projektdurchführung läuft</div>
+        <div class="tl-desc">Regelmäßige Projekttreffen mittwochs. Wochenprotokoll nach jedem Termin führen.</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-datum">Mi, 16.12.2026</div>
+      <div class="tl-dot benotet"></div>
+      <div class="tl-content">
+        <div class="tl-titel c-benotet">⭐ Checkpoint 2 — Benotet (Halbjahresgrundlage)</div>
+        <div class="tl-desc">Zwischenstand: Was wurde umgesetzt? Dokumentation bis Dezember vollständig. Grundlage für Halbjahresnotennotiz — Zeugnisausgabe folgt am 5.2.2027.</div>
+        <span class="tl-badge b-gelb">📋 Abgabe: Projektmappe Teil 2 — Zwischendokumentation</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-datum">23.12.26–6.1.27</div>
+      <div class="tl-dot ferien"></div>
+      <div class="tl-content"><div class="tl-titel c-ferien">🎄 Weihnachtsferien NRW</div></div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-datum">5.2.2027</div>
+      <div class="tl-dot ferien"></div>
+      <div class="tl-content"><div class="tl-titel c-ferien">📄 Aushändigung Halbjahreszeugnisse</div></div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-datum">Jan.–März 2027</div>
+      <div class="tl-dot milestone"></div>
+      <div class="tl-content">
+        <div class="tl-titel">Projektdurchführung abschließen</div>
+        <div class="tl-desc">Letzter Teil der Durchführung. Produkt fertigstellen. Abschlusspräsentation vorbereiten.</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-datum">Mi, 17.03.2027</div>
+      <div class="tl-dot benotet"></div>
+      <div class="tl-content">
+        <div class="tl-titel c-benotet">⭐ Checkpoint 3 — Benotet</div>
+        <div class="tl-desc">Projekt abgeschlossen oder in der Abschlussphase. Vollständige Projektdokumentation liegt vor. Letzter Mittwoch vor den Osterferien.</div>
+        <span class="tl-badge b-gelb">📋 Abgabe: Projektmappe Teil 3 — Gesamtdokumentation</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-datum">22.3.–3.4.2027</div>
+      <div class="tl-dot ferien"></div>
+      <div class="tl-content"><div class="tl-titel c-ferien">🐣 Osterferien NRW</div></div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-datum">Mi, 19.05.2027</div>
+      <div class="tl-dot abschluss"></div>
+      <div class="tl-content">
+        <div class="tl-titel c-abschluss">🎓 Abschlusspräsentation — Benotet</div>
+        <div class="tl-desc">Öffentliche Präsentation des Projekts vor der Klasse. Jede Person stellt ihren Beitrag vor. Reflexion: Was habt ihr bewirkt?</div>
+        <span class="tl-badge b-rot">📋 Abgabe: Vollständige Projektmappe + mündliche Präsentation</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="legende">
+    <div class="leg-item"><div class="leg-dot" style="background:var(--gruen)"></div>Meilenstein</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--gelb)"></div>Benoteter Checkpoint — Abgabepflicht</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--rot)"></div>Abschlusspräsentation</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#D1D5DB"></div>Ferien / Schultermin</div>
+  </div>
+</div>
+
+<!-- HAUPTINHALT -->
+<div class="container">
+
+  <!-- PRINZIP -->
+  <div class="info-box">
+    <h2>Das Prinzip hinter jedem Projekt</h2>
+    <p style="font-size:14px;color:#374151;">Du übernimmst Verantwortung für ein Thema, erarbeitest es gründlich und gibst es weiter. Andere profitieren von deiner Arbeit. Du erlebst, dass du etwas bewegen kannst.</p>
+    <div class="zwei-spalten">
+      <div class="spalte"><strong>Direkte Wirkung</strong><ul><li>Workshop leiten</li><li>Trainingseinheit durchführen</li><li>Veranstaltung organisieren</li><li>Beratung anbieten</li></ul></div>
+      <div class="spalte"><strong>Indirekte Wirkung (Produkt)</strong><ul><li>Podcast entwickeln &amp; veröffentlichen</li><li>Erklärvideo produzieren</li><li>Ausstellung gestalten</li><li>Präsentation für eine Klasse</li></ul></div>
+    </div>
+  </div>
+
+  <!-- DOKUMENTATION -->
+  <div class="info-box warn">
+    <h2>Dokumentation — Pflicht bei jedem Projekt</h2>
+    <p style="font-size:14px;color:#92400E;margin-bottom:14px;">Die <strong>Projektmappe</strong> wächst über das ganze Jahr mit dir. Ohne sie kann keine Bewertung erfolgen.</p>
+    <div class="zwei-spalten">
+      <div class="spalte warn-bg"><strong>Projektmappe enthält</strong><ul><li>Projektplan mit Rollen &amp; Zeitplan</li><li>Recherche-Ergebnisse &amp; Quellen</li><li>Wochenprotokoll (je Mittwoch)</li><li>Fotos / Screenshots der Arbeit</li><li>Feedback der Zielgruppe</li><li>Abschlussreflexion</li></ul></div>
+      <div class="spalte warn-bg"><strong>Abgabetermine (benotet)</strong><ul><li>Teil 1: Mi, 04.11.2026 — Planung</li><li>Teil 2: Mi, 16.12.2026 — Zwischendoku</li><li>Teil 3: Mi, 17.03.2027 — Gesamtdoku</li><li>Abschluss: Mi, 19.05.2027 — Präsentation</li></ul></div>
+    </div>
+  </div>
+
+  <!-- ===== PROJEKT 1 ===== -->
+  <div class="projekt">
+    <details>
+      <summary class="projekt-summary">
+        <div class="projekt-nr">1</div>
+        <div style="flex:1">
+          <div class="projekt-titel">Finanzbildung für jüngere Klassen</div>
+          <div class="projekt-sub">Schülerinnen werden Finanzexpertinnen und geben ihr Wissen weiter</div>
+          <div class="tags">
+            <span class="tag">SDG 1 · Keine Armut</span><span class="tag">SDG 4 · Bildung</span>
+            <span class="tag ort">🏫 Schule</span><span class="tag winter">❄️ Wintergeeignet</span>
+          </div>
+          <div class="projekt-preview">Budget, Schuldenfallen, Influencer-Werbung — Workshop oder Erklärvideo für Klasse 8/9</div>
+        </div>
+        <div class="toggle-icon">+</div>
+      </summary>
+      <div class="projekt-body">
+        <div><p class="abschnitt">Worum geht es?</p>
+          <p class="beschreibung">Ihr entwickelt einen Workshop zu einem Finanzthema und führt ihn mit einer jüngeren Klasse durch. Die Schülerinnen der Klasse 8 oder 9 sollen danach besser verstehen, wie man mit Geld umgeht, Schulden vermeidet oder ein Budget plant.</p>
+        </div>
+        <div><p class="abschnitt">Mögliche Themen</p>
+          <div class="varianten">
+            <div class="variante"><strong>Variante A: Mein erstes Budget</strong><p>Was kostet ein Monat Leben wirklich? Wie plane ich mein Geld? Praktische Übung mit echten Zahlen.</p></div>
+            <div class="variante"><strong>Variante B: Schuldenfallen im Alltag</strong><p>Ratenkauf, Abo-Fallen, Kreditkarten: Was passiert, wenn man den Überblick verliert? Fallbeispiele und Strategien.</p></div>
+            <div class="variante"><strong>Variante C: Influencer-Werbung durchschauen</strong><p>Wie beeinflusst Social Media meine Kaufentscheidungen? Medienkritik trifft Finanzbildung.</p></div>
+          </div>
+        </div>
+        <div><p class="abschnitt">Projektrollen im Team</p>
+          <div class="rollen-grid">
+            <div class="rolle">Recherche &amp; Konzept</div><div class="rolle">Workshop-Materialien</div>
+            <div class="rolle">Moderation &amp; Durchführung</div><div class="rolle">Dokumentation &amp; Auswertung</div>
+          </div>
+        </div>
+        <div><p class="abschnitt">Checkpoints &amp; Abgaben</p>
+          <div class="checkpoints">
+            <div class="cp"><span class="cp-phase">Phase 1</span><span class="cp-datum">Mi, 04.11.2026</span>
+              <div class="cp-text"><strong>Thema, Zielgruppe &amp; Recherche</strong>Welche Klasse? Welches Finanzthema? Mindestens 3 Materialien von oh-money.de gesichtet.
+              <div class="cp-abgabe gelb">📋 Projektmappe Teil 1: Planung + Recherche-Ergebnisse</div></div>
+            </div>
+            <div class="cp"><span class="cp-phase gelb">Halbjahr</span><span class="cp-datum gelb">Mi, 16.12.2026</span>
+              <div class="cp-text"><strong>Workshop-Konzept fertig</strong>Vollständiger Ablaufplan, Materialien, Aufgaben. Probelauf geplant oder durchgeführt.
+              <div class="cp-abgabe gelb">📋 Projektmappe Teil 2: Konzept + Wochenprotokolle</div></div>
+            </div>
+            <div class="cp"><span class="cp-phase">Phase 2</span><span class="cp-datum">Mi, 17.03.2027</span>
+              <div class="cp-text"><strong>Workshop durchgeführt</strong>Feedback der Teilnehmenden eingeholt. Reflexion: Was hat funktioniert?
+              <div class="cp-abgabe">📋 Projektmappe Teil 3: Durchführungsdoku + Feedback</div></div>
+            </div>
+            <div class="cp"><span class="cp-phase rot">Abschluss</span><span class="cp-datum rot">Mi, 19.05.2027</span>
+              <div class="cp-text"><strong>Abschlusspräsentation vor der Klasse</strong>Jede Person stellt ihren Beitrag vor. Was habt ihr bewirkt?
+              <div class="cp-abgabe rot">📋 Vollständige Projektmappe + mündliche Präsentation</div></div>
+            </div>
+          </div>
+        </div>
+        <div><p class="abschnitt">Materialien &amp; Quellen</p>
+          <div class="mat-liste">
+            <div class="mat-item"><a href="https://www.oh-money.de/unterricht" target="_blank">oh-money.de/unterricht</a> — kostenlose Unterrichtsimpulse zu Budget, Schulden, Werbung (Comenius-ausgezeichnet)</div>
+          </div>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <!-- ===== PROJEKT 2 ===== -->
+  <div class="projekt">
+    <details>
+      <summary class="projekt-summary">
+        <div class="projekt-nr">2</div>
+        <div style="flex:1">
+          <div class="projekt-titel">DFB-Fußball-Abzeichen mit Kita oder OGS</div>
+          <div class="projekt-sub">Schülerinnen trainieren Kinder wochenlang und krönen alles mit dem Abnahmetag</div>
+          <div class="tags">
+            <span class="tag">SDG 3 · Gesundheit</span><span class="tag">SDG 10 · Inklusion</span>
+            <span class="tag ort">🏫 Sporthalle + Kita/OGS</span><span class="tag winter">❄️ Wintergeeignet</span>
+          </div>
+          <div class="projekt-preview">Regelmäßiges Training mit Kita- oder OGS-Kindern, Abschluss mit offiziellem Abnahmetag und DFB-Urkunde</div>
+        </div>
+        <div class="toggle-icon">+</div>
+      </summary>
+      <div class="projekt-body">
+        <div><p class="abschnitt">Worum geht es?</p>
+          <p class="beschreibung">Ihr begleitet über Monate eine Kita-Gruppe oder OGS-Kinder, trainiert mit ihnen die Stationen des DFB-Fußball-Abzeichens und krönt das Projekt mit dem gemeinsamen Abnahmetag. Kein einmaliger Ausflug — sondern eine echte Beziehung über Wochen.</p>
+        </div>
+        <div><p class="abschnitt">Projektablauf</p>
+          <div class="varianten">
+            <div class="variante"><strong>Phase 1: Vorbereitung (bis Herbstferien)</strong><p>Kita oder OGS kontaktieren, Trainingsplan erstellen, Stationen selbst einüben, DFB-Anmeldung mindestens 4 Wochen vor dem Abnahmetag.</p></div>
+            <div class="variante"><strong>Phase 2: Wöchentliches Training (Nov.–Feb.)</strong><p>Regelmäßige Einheiten in der Sporthalle. Paule-Schnupper-Abzeichen für Jüngere: nur 3 Stationen, passt in jede Halle.</p></div>
+            <div class="variante"><strong>Abschluss: Offizieller Abnahmetag (Feb./März)</strong><p>Ihr organisiert alles selbst: Anmeldung, Stationsbetreuung, Zeitnahme, Urkundenübergabe. DFB liefert alle Materialien kostenlos.</p></div>
+          </div>
+        </div>
+        <div><p class="abschnitt">Projektrollen im Team</p>
+          <div class="rollen-grid">
+            <div class="rolle">Trainingsleitung pro Kleingruppe</div><div class="rolle">Kooperation &amp; Kontakt Kita/OGS</div>
+            <div class="rolle">DFB-Anmeldung &amp; Organisation</div><div class="rolle">Dokumentation (Fotos, Fortschritte)</div>
+            <div class="rolle">Event-Koordination Abnahmetag</div><div class="rolle">Urkundenausgabe &amp; Abschluss</div>
+          </div>
+        </div>
+        <div><p class="abschnitt">Checkpoints &amp; Abgaben</p>
+          <div class="checkpoints">
+            <div class="cp"><span class="cp-phase">Phase 1</span><span class="cp-datum">Mi, 04.11.2026</span>
+              <div class="cp-text"><strong>Partner gefunden, Trainingsplan liegt vor</strong>Kita oder OGS hat zugesagt. Erster Termin vereinbart. DFB-Anmeldung vorbereitet.
+              <div class="cp-abgabe">📋 Projektmappe Teil 1: Kooperationsvereinbarung + Trainingsplan</div></div>
+            </div>
+            <div class="cp"><span class="cp-phase gelb">Halbjahr</span><span class="cp-datum gelb">Mi, 16.12.2026</span>
+              <div class="cp-text"><strong>Trainings laufen, Abnahmetag terminiert</strong>Mindestens 4 Trainingseinheiten dokumentiert. Datum des Abnahmetages steht.
+              <div class="cp-abgabe gelb">📋 Projektmappe Teil 2: Trainings-Protokolle + DFB-Anmeldebestätigung</div></div>
+            </div>
+            <div class="cp"><span class="cp-phase">Phase 2</span><span class="cp-datum">Mi, 17.03.2027</span>
+              <div class="cp-text"><strong>Abnahmetag durchgeführt</strong>Alle Kinder haben Urkunde und Pin. Feedback der Kita/OGS liegt vor.
+              <div class="cp-abgabe">📋 Projektmappe Teil 3: Abnahmetag-Doku + Feedback</div></div>
+            </div>
+            <div class="cp"><span class="cp-phase rot">Abschluss</span><span class="cp-datum rot">Mi, 19.05.2027</span>
+              <div class="cp-text"><strong>Abschlusspräsentation</strong>Was war besonders? Was war schwierig? Rückblick mit Fotos auf die Kinder-Entwicklung.
+              <div class="cp-abgabe rot">📋 Vollständige Projektmappe + mündliche Präsentation</div></div>
+            </div>
+          </div>
+        </div>
+        <div><p class="abschnitt">Materialien &amp; Quellen</p>
+          <div class="mat-liste">
+            <div class="mat-item"><a href="https://www.fussballabzeichen.de/" target="_blank">fussballabzeichen.de</a> — Anmeldung &amp; kostenlose Materialpakete (Urkunden, Pins, Poster)</div>
+            <div class="mat-item"><a href="https://www.fvm.de/engagement/schule-und-kita/dfb-fussball-abzeichen/" target="_blank">fvm.de · Fußball-Verband Mittelrhein</a> — regionale Ansprechpartner</div>
+          </div>
+        </div>
+        <div class="hinweis"><strong>Wichtig:</strong> DFB-Anmeldung mindestens 4 Wochen vor dem Abnahmetag einreichen. Frühzeitig Kita/OGS kontaktieren.</div>
+      </div>
+    </details>
+  </div>
+
+  <!-- ===== PROJEKT 3 ===== -->
+  <div class="projekt">
+    <details>
+      <summary class="projekt-summary">
+        <div class="projekt-nr">3</div>
+        <div style="flex:1">
+          <div class="projekt-titel">Medien &amp; Verantwortung</div>
+          <div class="projekt-sub">Medienkompetenz weitergeben — als Workshop, Video oder Podcast</div>
+          <div class="tags">
+            <span class="tag">SDG 4 · Bildung</span><span class="tag">SDG 16 · Gerechtigkeit</span>
+            <span class="tag ort">🏫 Schule</span><span class="tag winter">❄️ Wintergeeignet</span>
+          </div>
+          <div class="projekt-preview">Cybermobbing, Fake News, Datenschutz, Screentime — Workshop oder Podcast für jüngere Klassen</div>
+        </div>
+        <div class="toggle-icon">+</div>
+      </summary>
+      <div class="projekt-body">
+        <div><p class="abschnitt">Worum geht es?</p>
+          <p class="beschreibung">Ihr wählt ein Medienthema, das euch beschäftigt und das jüngere Schülerinnen betrifft. Ihr erarbeitet es gründlich, entwickelt ein Format und gebt euer Wissen weiter — als Workshop, Podcast, Erklärvideo oder Präsentation.</p>
+        </div>
+        <div><p class="abschnitt">Mögliche Themen &amp; Formate</p>
+          <div class="varianten">
+            <div class="variante"><strong>Cybermobbing erkennen &amp; handeln</strong><p>Was ist Cybermobbing? Was kann ich tun? Workshop für Klasse 6 oder 7. Fertiges Material von klicksafe.de vorhanden.</p></div>
+            <div class="variante"><strong>Fake News &amp; KI-Bilder entlarven</strong><p>Wie erkenne ich manipulierte Fotos und falsche Nachrichten? Interaktiver Workshop oder Quiz-Format. Material von medienbox-nrw.de.</p></div>
+            <div class="variante"><strong>Screentime &amp; digitales Wohlbefinden</strong><p>Wie viel ist zu viel? Was macht ständige Erreichbarkeit mit uns? Podcast-Folge oder Infokampagne in der Schule.</p></div>
+            <div class="variante"><strong>Datenschutz im Alltag</strong><p>Welche Daten geben wir täglich preis? Erklärvideo oder Plakat-Kampagne durch die Schule.</p></div>
+            <div class="variante"><strong>KI &amp; Demokratie — Generation KI (Digitale Helden)</strong><p>Ihr nutzt die kostenlosen Online-Kurse von "generation:ki" als Grundlage: Fake News, Desinformation, KI im Alltag. Daraus entwickelt ihr eigenständig einen 90-Minuten-Klassenbesuch für Klasse 5 oder 6. Die fertige Aktion kann auf der Generation-KI-Plattform eingereicht werden — und wird damit über eure Schule hinaus sichtbar.</p></div>
+          </div>
+        </div>
+        <div><p class="abschnitt">Projektrollen im Team</p>
+          <div class="rollen-grid">
+            <div class="rolle">Recherche &amp; Themenvertiefung</div><div class="rolle">Konzept &amp; Materialentwicklung</div>
+            <div class="rolle">Durchführung / Produktion</div><div class="rolle">Dokumentation &amp; Auswertung</div>
+          </div>
+        </div>
+        <div><p class="abschnitt">Checkpoints &amp; Abgaben</p>
+          <div class="checkpoints">
+            <div class="cp"><span class="cp-phase">Phase 1</span><span class="cp-datum">Mi, 04.11.2026</span>
+              <div class="cp-text"><strong>Thema, Format &amp; Zielgruppe</strong>Was genau ist das Medienthema? Welches Format? Für wen? Recherche abgeschlossen.
+              <div class="cp-abgabe">📋 Projektmappe Teil 1: Thema + Recherche + Konzeptidee</div></div>
+            </div>
+            <div class="cp"><span class="cp-phase gelb">Halbjahr</span><span class="cp-datum gelb">Mi, 16.12.2026</span>
+              <div class="cp-text"><strong>Produkt/Konzept in Arbeit</strong>Workshop-Plan, Podcast-Skript oder Video-Rohschnitt liegt vor.
+              <div class="cp-abgabe gelb">📋 Projektmappe Teil 2: Konzept/Skript + Zwischenstand</div></div>
+            </div>
+            <div class="cp"><span class="cp-phase">Phase 2</span><span class="cp-datum">Mi, 17.03.2027</span>
+              <div class="cp-text"><strong>Durchführung/Veröffentlichung abgeschlossen</strong>Workshop wurde gehalten oder Produkt veröffentlicht. Feedback liegt vor.
+              <div class="cp-abgabe">📋 Projektmappe Teil 3: Durchführungsdoku + Feedback-Auswertung</div></div>
+            </div>
+            <div class="cp"><span class="cp-phase rot">Abschluss</span><span class="cp-datum rot">Mi, 19.05.2027</span>
+              <div class="cp-text"><strong>Abschlusspräsentation</strong>Was habt ihr gelernt? Was hat bei der Zielgruppe gewirkt?
+              <div class="cp-abgabe rot">📋 Vollständige Projektmappe + mündliche Präsentation</div></div>
+            </div>
+          </div>
+        </div>
+        <div><p class="abschnitt">Materialien &amp; Quellen</p>
+          <div class="mat-liste">
+            <div class="mat-item"><a href="https://www.klicksafe.de/" target="_blank">klicksafe.de</a> — kostenlose Unterrichtsreihen zu Cybermobbing, Fake News, Screentime, Datenschutz</div>
+            <div class="mat-item"><a href="https://medienbox-nrw.de/schulmaterialien/" target="_blank">medienbox-nrw.de</a> — kostenlose Konzepte zu Fake News &amp; Medienproduktion (Kl. 7–13)</div>
+            <div class="mat-item"><a href="https://www.medienscouts-nrw.de/" target="_blank">medienscouts-nrw.de</a> — Themen und Hintergrundmaterial der Medienscouts NRW</div>
+            <div class="mat-item"><a href="https://akademie.digitale-helden.de/online-kurse/" target="_blank">akademie.digitale-helden.de</a> — kostenlose Online-Kurse zu KI, Fake News, Cybermobbing (generation:ki)</div>
+            <div class="mat-item"><a href="https://digitale-helden.de/generation-ki-aktionen" target="_blank">digitale-helden.de/generation-ki-aktionen</a> — Plattform zum Einreichen eurer Aktion — macht euer Projekt über die Schule hinaus sichtbar</div>
+            <div class="mat-item"><a href="https://www.medienscouts-nrw.de/" target="_blank">medienscouts-nrw.de</a> — offizielle Medienscouts-Ausbildung NRW (Schulministerium) — Bewerbung prüfen!</div>
+          </div>
+        </div>
+        <div class="hinweis">
+          <strong>Perspektive Medienscouts NRW:</strong> Dieses Projekt kann in zwei Varianten umgesetzt werden.<br><br>
+          <strong>Weg A — Offizielle Ausbildung:</strong> Schule meldet sich beim Medienscouts-Programm des Schulministeriums NRW an. Schülerinnen werden formal ausgebildet und übernehmen eine echte Beratungsrolle an der Schule. Bewerbungsphase prüfen unter medienscouts-nrw.de.<br><br>
+          <strong>Weg B — Eigenständig (ohne Anmeldung):</strong> Ihr erarbeitet euch die Inhalte selbst über klicksafe.de und Digitale Helden und entwickelt daraus ein eigenes Workshop- oder Beratungsformat — ohne formale Zertifizierung, aber mit denselben Inhalten und derselben Wirkung.
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <!-- ===== PROJEKT 4 ===== -->
+  <div class="projekt">
+    <details>
+      <summary class="projekt-summary">
+        <div class="projekt-nr">4</div>
+        <div style="flex:1">
+          <div class="projekt-titel">Generationenbrücke: Digital &amp; Begegnung</div>
+          <div class="projekt-sub">Senioren im Pflegeheim digital begleiten oder echte Begegnung schaffen</div>
+          <div class="tags">
+            <span class="tag">SDG 3 · Gesundheit</span><span class="tag">SDG 10 · Teilhabe</span><span class="tag">SDG 11 · Gemeinschaft</span>
+            <span class="tag ort">🏢 Pflegeheim / Senioreneinrichtung</span><span class="tag winter">❄️ Wintergeeignet</span>
+          </div>
+          <div class="projekt-preview">Smartphone-Kurs, KI-Workshop oder Spielenachmittag — regelmäßiges Format in einer Senioreneinrichtung</div>
+        </div>
+        <div class="toggle-icon">+</div>
+      </summary>
+      <div class="projekt-body">
+        <div><p class="abschnitt">Worum geht es?</p>
+          <p class="beschreibung">Ihr geht regelmäßig in eine Senioreneinrichtung und bringt etwas mit: ein konkretes Angebot, ein Konzept, ein Programm. Kein bloßer Besuchsdienst — sondern ein echtes Format, das ihr selbst entwickelt und das ihr über Monate durchzieht.</p>
+        </div>
+        <div><p class="abschnitt">Drei mögliche Varianten</p>
+          <div class="varianten">
+            <div class="variante"><strong>Variante A: Digital-Patenschaft — Smartphone &amp; Tablet-Kurs</strong><p>Strukturierter Kurs (6 Einheiten): WhatsApp, Videotelefonie, Online-Einkauf, Sicherheit im Netz. Abschluss mit Zertifikat. Partner und Materialien kostenlos über „Digitaler Engel".</p></div>
+            <div class="variante"><strong>Variante B: KI-Workshop für Senioren</strong><p>Ihr erklärt KI-Anwendungen alltagsnah: Sprachassistenten, Fotos bearbeiten, Texte diktieren, Fake News erkennen. Ihr seid die Expertinnen.</p></div>
+            <div class="variante"><strong>Variante C: Spielenachmittag mit Konzept</strong><p>Durchdachtes Programm (Gesellschaftsspiele, Vorlesekreis, Generationen-Gespräch) als festes Format über Monate — nicht einmalig.</p></div>
+          </div>
+        </div>
+        <div><p class="abschnitt">Projektrollen im Team</p>
+          <div class="rollen-grid">
+            <div class="rolle">Konzeptentwicklung &amp; Planung</div><div class="rolle">Kontakt zur Einrichtung</div>
+            <div class="rolle">Durchführung pro Einheit</div><div class="rolle">Dokumentation &amp; Portfolio</div>
+          </div>
+        </div>
+        <div><p class="abschnitt">Checkpoints &amp; Abgaben</p>
+          <div class="checkpoints">
+            <div class="cp"><span class="cp-phase">Phase 1</span><span class="cp-datum">Mi, 04.11.2026</span>
+              <div class="cp-text"><strong>Einrichtung gefunden, Konzept steht</strong>Welche Einrichtung? Ansprechperson bekannt. Variante gewählt. Erster Ablaufplan liegt vor.
+              <div class="cp-abgabe">📋 Projektmappe Teil 1: Kooperation + Konzept + Ablaufplan</div></div>
+            </div>
+            <div class="cp"><span class="cp-phase gelb">Halbjahr</span><span class="cp-datum gelb">Mi, 16.12.2026</span>
+              <div class="cp-text"><strong>Mindestens 4 Einheiten durchgeführt</strong>Dokumentation aktuell. Zwischenreflexion: Was läuft gut? Was ändern wir?
+              <div class="cp-abgabe gelb">📋 Projektmappe Teil 2: Einheiten-Protokolle + Zwischenreflexion</div></div>
+            </div>
+            <div class="cp"><span class="cp-phase">Phase 2</span><span class="cp-datum">Mi, 17.03.2027</span>
+              <div class="cp-text"><strong>Projekt abgeschlossen</strong>Alle Einheiten durchgeführt. Ggf. Zertifikat übergeben. Feedback der Einrichtung liegt vor.
+              <div class="cp-abgabe">📋 Projektmappe Teil 3: Gesamtdoku + Feedback der Einrichtung</div></div>
+            </div>
+            <div class="cp"><span class="cp-phase rot">Abschluss</span><span class="cp-datum rot">Mi, 19.05.2027</span>
+              <div class="cp-text"><strong>Abschlusspräsentation</strong>Was hat sich verändert — bei den Senioren und bei euch selbst?
+              <div class="cp-abgabe rot">📋 Vollständige Projektmappe + mündliche Präsentation</div></div>
+            </div>
+          </div>
+        </div>
+        <div><p class="abschnitt">Materialien &amp; Quellen</p>
+          <div class="mat-liste">
+            <div class="mat-item"><a href="https://www.digitaler-engel.org/digital-patenschaften" target="_blank">digitaler-engel.org</a> — vermittelt Schulen kostenlos Partnereinrichtungen &amp; Materialien (bundesweit)</div>
+            <div class="mat-item"><a href="https://www.klicksafe.de/" target="_blank">klicksafe.de</a> — Materialien für digitale Grundbildung, auch für Senioren nutzbar</div>
+          </div>
+        </div>
+        <div class="hinweis"><strong>Wichtig:</strong> Frühzeitig Kontakt aufnehmen — Einrichtungen brauchen Vorlauf. Datenschutz und Schweigepflicht klären. Schülerinnen auf herausfordernde Situationen (z.B. Demenz) vorbereiten.</div>
+      </div>
+    </details>
+  </div>
+
+  <!-- ===== PROJEKT 5 ===== -->
+  <div class="projekt">
+    <details>
+      <summary class="projekt-summary">
+        <div class="projekt-nr">5</div>
+        <div style="flex:1">
+          <div class="projekt-titel">Geschichte &amp; Erinnerung: Gedenkstätte Brauweiler</div>
+          <div class="projekt-sub">Lokale Geschichte erforschen und anderen zugänglich machen</div>
+          <div class="tags">
+            <span class="tag">SDG 4 · Bildung</span><span class="tag">SDG 16 · Frieden &amp; Gerechtigkeit</span>
+            <span class="tag ort">🏛️ Gedenkstätte Brauweiler + Schule</span><span class="tag winter">❄️ Wintergeeignet</span>
+          </div>
+          <div class="projekt-preview">NS-Geschichte direkt vor der Haustür — Archivrecherche, Workshop, Podcast oder Ausstellung für andere</div>
+        </div>
+        <div class="toggle-icon">+</div>
+      </summary>
+      <div class="projekt-body">
+        <div><p class="abschnitt">Worum geht es?</p>
+          <p class="beschreibung">Die Abtei Brauweiler war während des Nationalsozialismus Konzentrationslager, Gestapo-Gefängnis und Arbeitsanstalt. Hier wurden Menschen eingesperrt, gefoltert und ermordet — darunter jugendliche Edelweißpiraten und Konrad Adenauer. Ihr erforscht diesen Ort direkt vor eurer Haustür und macht die Geschichte für andere sichtbar.</p>
+        </div>
+        <div><p class="abschnitt">Mögliche Projektformen</p>
+          <div class="varianten">
+            <div class="variante"><strong>Variante A: Workshop für jüngere Klassen</strong><p>Ihr besucht die Gedenkstätte, recherchiert im LVR-Archiv und entwickelt daraus einen Workshop (z.B. Edelweißpiraten, Jugendwiderstand im NS) für eine Klasse 8.</p></div>
+            <div class="variante"><strong>Variante B: Podcast oder Erklärvideo</strong><p>Ihr produziert eine Podcast-Folge oder ein Erklärvideo zur Geschichte der Gedenkstätte — für Gleichaltrige, die noch nie davon gehört haben.</p></div>
+            <div class="variante"><strong>Variante C: Biografiearbeit &amp; Ausstellung</strong><p>Ihr recherchiert die Biografie eines Inhaftierten aus dem Raum Pulheim im LVR-Archiv und gestaltet daraus eine Ausstellung für die Schule.</p></div>
+          </div>
+        </div>
+        <div><p class="abschnitt">Projektrollen im Team</p>
+          <div class="rollen-grid">
+            <div class="rolle">Archivrecherche &amp; Quellenarbeit</div><div class="rolle">Gedenkstättenbesuch &amp; Führung</div>
+            <div class="rolle">Konzept &amp; Produktion</div><div class="rolle">Durchführung / Veröffentlichung</div>
+          </div>
+        </div>
+        <div><p class="abschnitt">Checkpoints &amp; Abgaben</p>
+          <div class="checkpoints">
+            <div class="cp"><span class="cp-phase">Phase 1</span><span class="cp-datum">Mi, 04.11.2026</span>
+              <div class="cp-text"><strong>Thema, Format &amp; Besuchsplanung</strong>Welches historische Thema? Welches Format? Termin mit Dr. Thulin vereinbart oder bestätigt.
+              <div class="cp-abgabe">📋 Projektmappe Teil 1: Thema + Recherche-Ergebnisse + Besuchsplanung</div></div>
+            </div>
+            <div class="cp"><span class="cp-phase gelb">Halbjahr</span><span class="cp-datum gelb">Mi, 16.12.2026</span>
+              <div class="cp-text"><strong>Gedenkstätte besucht, Archivmaterial gesichtet</strong>Kernaussagen dokumentiert. Konzept für Workshop/Podcast/Ausstellung steht.
+              <div class="cp-abgabe gelb">📋 Projektmappe Teil 2: Archiv-Recherche + Konzept</div></div>
+            </div>
+            <div class="cp"><span class="cp-phase">Phase 2</span><span class="cp-datum">Mi, 17.03.2027</span>
+              <div class="cp-text"><strong>Produkt fertig und durchgeführt/veröffentlicht</strong>Workshop wurde gehalten oder Produkt ist fertiggestellt.
+              <div class="cp-abgabe">📋 Projektmappe Teil 3: Gesamtdoku + Produkt</div></div>
+            </div>
+            <div class="cp"><span class="cp-phase rot">Abschluss</span><span class="cp-datum rot">Mi, 19.05.2027</span>
+              <div class="cp-text"><strong>Abschlusspräsentation</strong>Was bedeutet dieser Ort für euch? Was sollten andere darüber wissen?
+              <div class="cp-abgabe rot">📋 Vollständige Projektmappe + mündliche Präsentation</div></div>
+            </div>
+          </div>
+        </div>
+        <div><p class="abschnitt">Materialien &amp; Kontakt</p>
+          <div class="mat-liste">
+            <div class="mat-item"><a href="https://gedenkstaette-brauweiler.lvr.de/" target="_blank">gedenkstaette-brauweiler.lvr.de</a> — Informationen, buchbare Workshops &amp; Führungen</div>
+            <div class="mat-item"><a href="https://afz.lvr.de/" target="_blank">afz.lvr.de</a> — LVR-Archiv, kostenfreie Angebote für Schulklassen</div>
+            <div class="mat-item">Ansprechperson: Dr. Markus Thulin · markus.thulin@lvr.de · Tel. 02234 9854-278</div>
+            <div class="mat-item">Kosten: Rhein-Erft-Kreis übernimmt auf Antrag Fahrtkosten &amp; Führungsgebühren</div>
+          </div>
+        </div>
+        <div class="hinweis"><strong>Empfohlen ab 15 Jahren.</strong> Früh anmelden — Workshops sind buchungspflichtig. Ein Schüler eurer Schule kennt das Archiv bereits vom Praktikum.</div>
+      </div>
+    </details>
+  </div>
+
+  <!-- ===== PROJEKT 6 ===== -->
+  <div class="projekt">
+    <details>
+      <summary class="projekt-summary">
+        <div class="projekt-nr">6</div>
+        <div style="flex:1">
+          <div class="projekt-titel">Erste Hilfe weitergeben — Schulsanis als Ausbildende</div>
+          <div class="projekt-sub">Ausgebildete Schulsanitäterinnen entwickeln Schnupperkurse für jüngere Schülerinnen</div>
+          <div class="tags">
+            <span class="tag">SDG 3 · Gesundheit</span><span class="tag">SDG 4 · Bildung</span>
+            <span class="tag ort">🏫 Schule + ggf. Grundschule</span><span class="tag winter">❄️ Wintergeeignet</span>
+          </div>
+          <div class="projekt-preview">Schulsanis drehen das Modell um: statt nur im Ernstfall zu helfen, bilden sie aktiv andere aus</div>
+        </div>
+        <div class="toggle-icon">+</div>
+      </summary>
+      <div class="projekt-body">
+        <div><p class="abschnitt">Worum geht es?</p>
+          <p class="beschreibung">Euer Schulsanitätsdienst ist die perfekte Ausgangsbasis. Ihr seid bereits ausgebildet — jetzt gebt ihr dieses Wissen weiter. Keine Ausbildung im rechtlichen Sinne, sondern ein niedrigschwelliger Schnupperkurs der Bewusstsein schafft und Grundlagen vermittelt.</p>
+        </div>
+        <div><p class="abschnitt">Zwei Projektvarianten</p>
+          <div class="varianten">
+            <div class="variante"><strong>Variante A: Erste-Hilfe-Schnupperkurs für Klasse 5/6</strong><p>Ihr entwickelt einen 60-Minuten-Workshop mit Stationsprinzip: Notruf absetzen, stabile Seitenlage, Wunden versorgen, Pflaster anlegen. Altersgerecht, mit echten Übungsszenarien. Ihr führt ihn in mehreren Klassen durch.</p></div>
+            <div class="variante"><strong>Variante B: Junior-Helfer-Programm mit einer Grundschule</strong><p>Das DRK hat mit "Kinder helfen Kindern" fertiges Material für Grundschulkinder. Ihr nutzt es als Basis und begleitet Grundschülerinnen über mehrere Wochen. Mehr Tiefe, echte Beziehung, größere Wirkung.</p></div>
+          </div>
+        </div>
+        <div><p class="abschnitt">Projektrollen im Team</p>
+          <div class="rollen-grid">
+            <div class="rolle">Konzept &amp; Stationsplanung</div><div class="rolle">Kontakt zu Klasse/Grundschule</div>
+            <div class="rolle">Durchführung pro Station</div><div class="rolle">Dokumentation &amp; Auswertung</div>
+          </div>
+        </div>
+        <div><p class="abschnitt">Checkpoints &amp; Abgaben</p>
+          <div class="checkpoints">
+            <div class="cp"><span class="cp-phase">Phase 1</span><span class="cp-datum">Mi, 04.11.2026</span>
+              <div class="cp-text"><strong>Variante gewählt, Konzept steht</strong>Welche Zielgruppe? Welche Stationen? Kontakt zur Klasse oder Grundschule hergestellt.
+              <div class="cp-abgabe">📋 Projektmappe Teil 1: Konzept + Stationsplan + Zielgruppe</div></div>
+            </div>
+            <div class="cp"><span class="cp-phase gelb">Halbjahr</span><span class="cp-datum gelb">Mi, 16.12.2026</span>
+              <div class="cp-text"><strong>Erste Durchführung abgeschlossen</strong>Mindestens ein Kurs/eine Einheit gehalten. Feedback eingeholt. Anpassungen dokumentiert.
+              <div class="cp-abgabe gelb">📋 Projektmappe Teil 2: Durchführungsprotokoll + Feedback + Anpassungen</div></div>
+            </div>
+            <div class="cp"><span class="cp-phase">Phase 2</span><span class="cp-datum">Mi, 17.03.2027</span>
+              <div class="cp-text"><strong>Alle Einheiten/Kurse abgeschlossen</strong>Gesamtdokumentation vollständig. Wie viele Schülerinnen habt ihr erreicht?
+              <div class="cp-abgabe">📋 Projektmappe Teil 3: Gesamtdoku + Reichweite + Abschlussreflexion</div></div>
+            </div>
+            <div class="cp"><span class="cp-phase rot">Abschluss</span><span class="cp-datum rot">Mi, 19.05.2027</span>
+              <div class="cp-text"><strong>Abschlusspräsentation</strong>Was haben die Jüngeren gelernt? Was habt ihr selbst über Erste Hilfe noch einmal vertieft?
+              <div class="cp-abgabe rot">📋 Vollständige Projektmappe + mündliche Präsentation</div></div>
+            </div>
+          </div>
+        </div>
+        <div><p class="abschnitt">Materialien &amp; Quellen</p>
+          <div class="mat-liste">
+            <div class="mat-item"><a href="https://www.drk.de/hilfe-in-deutschland/kinder-und-jugendliche/jugendrotkreuz/" target="_blank">jugendrotkreuz.de</a> — "Kinder helfen Kindern": kostenlose Stationspläne, Themeneinheiten Notruf/Wunden/Sportverletzungen</div>
+            <div class="mat-item"><a href="https://www.malteser.de/junge-menschen-und-schule/schulsanitaetsdienst.html" target="_blank">malteser.de/schulsanitaetsdienst</a> — "Abenteuer Helfen": kostenlose Arbeitshilfe für altersgerechte Erste-Hilfe-Vermittlung</div>
+            <div class="mat-item"><a href="https://www.gesundmachtschule.de/lehrkraefte/erste-hilfe" target="_blank">gesundmachtschule.de</a> — Unterrichtsmaterialien &amp; Hintergrundinformationen</div>
+          </div>
+        </div>
+        <div class="hinweis"><strong>Wichtig:</strong> Ihr leitet Schnupperkurse, keine offiziellen Ausbildungen. Das ist rechtlich problemlos. Ihr vermittelt Bewusstsein und Grundlagen — keine Qualifikation. Absprache mit der Schulleitung vorab empfohlen.</div>
+      </div>
+    </details>
+  </div>
+
+  <!-- ===== PROJEKT 7 ===== -->
+  <div class="projekt">
+    <details>
+      <summary class="projekt-summary">
+        <div class="projekt-nr">7</div>
+        <div style="flex:1">
+          <div class="projekt-titel">Schulpodcast: Mini-Serie zu Schulthemen</div>
+          <div class="projekt-sub">3-4 Folgen, ein Thema, echte Stimmen aus der Schulgemeinschaft</div>
+          <div class="tags">
+            <span class="tag">SDG 4 · Bildung</span><span class="tag">SDG 16 · Teilhabe &amp; Meinungsfreiheit</span>
+            <span class="tag ort">🏫 Schule</span><span class="tag winter">❄️ Wintergeeignet</span>
+          </div>
+          <div class="projekt-preview">Schülerinnen entwickeln eine Mini-Podcast-Serie zu einem Schulthema — recherchiert, produziert, veröffentlicht</div>
+        </div>
+        <div class="toggle-icon">+</div>
+      </summary>
+      <div class="projekt-body">
+        <div><p class="abschnitt">Worum geht es?</p>
+          <p class="beschreibung">Ihr wählt ein Thema das euch und andere an der Schule beschäftigt, recherchiert es gründlich und produziert eine Mini-Serie mit 3-4 Podcast-Folgen. Kein einmaliges Produkt — sondern ein Format mit rotem Faden. Andere Schülerinnen, Lehrkräfte oder Eltern hören zu und profitieren.</p>
+        </div>
+        <div><p class="abschnitt">Mögliche Themen</p>
+          <div class="varianten">
+            <div class="variante"><strong>Schulstress &amp; mentale Gesundheit</strong><p>Wie gehen Schülerinnen mit Prüfungsdruck um? Was hilft wirklich? Interviews mit Gleichaltrigen, Lehrkräften, vielleicht einer Schulpsychologin. 4 Folgen: Problem, Ursachen, Strategien, Ausblick.</p></div>
+            <div class="variante"><strong>KI in der Schule — Chance oder Problem?</strong><p>Wie nutzen Schülerinnen KI beim Lernen? Was denken Lehrkräfte darüber? Was ist erlaubt, was nicht? Verschiedene Perspektiven in 3-4 Folgen.</p></div>
+            <div class="variante"><strong>Was macht eine gute Schule?</strong><p>Was wünschen sich Schülerinnen von Schule? Was läuft gut, was nicht? Interviews, Meinungen, Ideen. Eine Folge pro Thema: Unterricht, Pausen, Mitbestimmung, Zukunft.</p></div>
+            <div class="variante"><strong>Frei wählbares Schulthema</strong><p>Ihr bestimmt selbst was euch bewegt — solange es relevant für die Schulgemeinschaft ist und andere davon profitieren.</p></div>
+          </div>
+        </div>
+        <div><p class="abschnitt">Projektrollen im Team</p>
+          <div class="rollen-grid">
+            <div class="rolle">Recherche &amp; Inhalt</div><div class="rolle">Interview-Führung &amp; Moderation</div>
+            <div class="rolle">Aufnahme &amp; Schnitt</div><div class="rolle">Veröffentlichung &amp; Dokumentation</div>
+          </div>
+        </div>
+        <div><p class="abschnitt">Checkpoints &amp; Abgaben</p>
+          <div class="checkpoints">
+            <div class="cp"><span class="cp-phase">Phase 1</span><span class="cp-datum">Mi, 04.11.2026</span>
+              <div class="cp-text"><strong>Thema, Serienkonzept &amp; Folgenplan</strong>Welches Thema? Wie viele Folgen? Was ist der rote Faden? Wer wird interviewt? Wie wird veröffentlicht?
+              <div class="cp-abgabe">📋 Projektmappe Teil 1: Serienkonzept + Folgenplan + Technik-Check</div></div>
+            </div>
+            <div class="cp"><span class="cp-phase gelb">Halbjahr</span><span class="cp-datum gelb">Mi, 16.12.2026</span>
+              <div class="cp-text"><strong>Mindestens 2 Folgen produziert</strong>Aufgenommen, geschnitten, veröffentlicht oder bereit zur Veröffentlichung.
+              <div class="cp-abgabe gelb">📋 Projektmappe Teil 2: Skripte + Aufnahmen + Zwischenreflexion</div></div>
+            </div>
+            <div class="cp"><span class="cp-phase">Phase 2</span><span class="cp-datum">Mi, 17.03.2027</span>
+              <div class="cp-text"><strong>Mini-Serie vollständig veröffentlicht</strong>Alle Folgen online oder intern verfügbar. Feedback der Hörerinnen eingeholt.
+              <div class="cp-abgabe">📋 Projektmappe Teil 3: Alle Folgen + Feedback + Reichweite</div></div>
+            </div>
+            <div class="cp"><span class="cp-phase rot">Abschluss</span><span class="cp-datum rot">Mi, 19.05.2027</span>
+              <div class="cp-text"><strong>Abschlusspräsentation</strong>Ausschnitte aus der Serie vorstellen. Was habt ihr gelernt — inhaltlich und über Podcast-Produktion?
+              <div class="cp-abgabe rot">📋 Vollständige Projektmappe + mündliche Präsentation inkl. Hörprobe</div></div>
+            </div>
+          </div>
+        </div>
+        <div><p class="abschnitt">Materialien &amp; Technik</p>
+          <div class="mat-liste">
+            <div class="mat-item">Aufnahme: Smartphone reicht. Ruhiger Raum, Kopfhörer als Mikrofon-Ersatz für den Anfang.</div>
+            <div class="mat-item">Schnitt kostenlos: Audacity (PC), GarageBand (Mac/iPad), CapCut (Smartphone)</div>
+            <div class="mat-item">Veröffentlichung intern: Moodle, Teams, QR-Code auf Plakat in der Schule</div>
+            <div class="mat-item"><a href="https://medienbox-nrw.de/schulmaterialien/" target="_blank">medienbox-nrw.de</a> — kostenlose Konzepte zu Medienproduktion &amp; Recherche</div>
+            <div class="mat-item"><a href="https://www.planet-schule.de/" target="_blank">planet-schule.de</a> — Schritt-für-Schritt-Leitfaden Podcast produzieren ab Klasse 9</div>
+          </div>
+        </div>
+        <div class="hinweis"><strong>Struktur ist entscheidend:</strong> Ohne festen Veröffentlichungsrhythmus schläft das Projekt ein. Folgenplan mit konkreten Terminen muss Teil des Projektauftrags sein.</div>
+      </div>
+    </details>
+  </div>
+
+  <!-- ===== PROJEKT 8 ===== -->
+  <div class="projekt">
+    <details>
+      <summary class="projekt-summary">
+        <div class="projekt-nr">8</div>
+        <div style="flex:1">
+          <div class="projekt-titel">Jahrbuch — Abschlussbuch für den Jahrgang 10</div>
+          <div class="projekt-sub">Ein bleibendes Produkt für den ganzen Jahrgang — geplant, gestaltet und produziert von Schülerinnen</div>
+          <div class="tags">
+            <span class="tag">SDG 4 · Bildung</span><span class="tag">SDG 11 · Gemeinschaft</span>
+            <span class="tag ort">🏫 Schule</span><span class="tag winter">❄️ Wintergeeignet</span>
+          </div>
+          <div class="projekt-preview">Verantwortung für den ganzen Jahrgang — Fotos, Texte, Layout, Druck, Finanzen</div>
+        </div>
+        <div class="toggle-icon">+</div>
+      </summary>
+      <div class="projekt-body">
+        <div><p class="abschnitt">Worum geht es?</p>
+          <p class="beschreibung">Ihr übernehmt Verantwortung für das Abschlussjahrbuch des gesamten Jahrgangs 10. Das Ergebnis bleibt — jede Schülerin nimmt am Ende ein echtes Buch mit nach Hause. Das ist kein Klassenprojekt, sondern ein Auftrag für den ganzen Jahrgang. Entsprechend groß ist die Verantwortung.</p>
+        </div>
+        <div><p class="abschnitt">Was das Jahrbuch enthalten kann</p>
+          <div class="varianten">
+            <div class="variante"><strong>Porträts &amp; Klassenseiten</strong><p>Jede Klasse bekommt eine eigene Seite oder Doppelseite. Fotos, kurze Texte, Zitate. Klassenlehrkräfte werden eingebunden.</p></div>
+            <div class="variante"><strong>Rückblick auf die Schulzeit</strong><p>Highlights, Projekte, Ausflüge, besondere Momente aus Klasse 5 bis 10. Interviews mit Lehrkräften und Schülerinnen.</p></div>
+            <div class="variante"><strong>Zukunftsseite</strong><p>"Was machst du in 10 Jahren?" — Wünsche, Ziele, Träume des Jahrgangs. Persönlich und ehrlich.</p></div>
+            <div class="variante"><strong>Danksagungen &amp; Abschluss</strong><p>Grußwort der Schulleitung, Widmungen, letzte Seite als Autogrammseite.</p></div>
+          </div>
+        </div>
+        <div><p class="abschnitt">Projektrollen im Team</p>
+          <div class="rollen-grid">
+            <div class="rolle">Chefredaktion &amp; Koordination</div><div class="rolle">Fotografie &amp; Bildredaktion</div>
+            <div class="rolle">Texte &amp; Interviews</div><div class="rolle">Layout &amp; Gestaltung</div>
+            <div class="rolle">Finanzen &amp; Druckorganisation</div><div class="rolle">Kommunikation mit Klassen &amp; Lehrkräften</div>
+          </div>
+        </div>
+        <div><p class="abschnitt">Checkpoints &amp; Abgaben</p>
+          <div class="checkpoints">
+            <div class="cp"><span class="cp-phase">Phase 1</span><span class="cp-datum">Mi, 04.11.2026</span>
+              <div class="cp-text"><strong>Konzept &amp; Struktur des Jahrbuchs</strong>Was kommt rein? Wie viele Seiten? Wer liefert was? Druckkosten recherchiert, Finanzierungsplan steht.
+              <div class="cp-abgabe">📋 Projektmappe Teil 1: Inhaltskonzept + Seitenplan + Kostenplanung</div></div>
+            </div>
+            <div class="cp"><span class="cp-phase gelb">Halbjahr</span><span class="cp-datum gelb">Mi, 16.12.2026</span>
+              <div class="cp-text"><strong>Inhalte gesammelt, Layout begonnen</strong>Fotos und Texte von allen Klassen eingeholt. Mindestens 50% der Seiten im Entwurf.
+              <div class="cp-abgabe gelb">📋 Projektmappe Teil 2: Entwurfs-Seiten + Sammelprotokoll</div></div>
+            </div>
+            <div class="cp"><span class="cp-phase">Phase 2</span><span class="cp-datum">Mi, 17.03.2027</span>
+              <div class="cp-text"><strong>Druckdatei fertig oder kurz vor Fertigstellung</strong>Alle Seiten layoutet, Korrektur gelesen, Druckauftrag vorbereitet.
+              <div class="cp-abgabe">📋 Projektmappe Teil 3: Druckfertige Datei oder finaler Entwurf</div></div>
+            </div>
+            <div class="cp"><span class="cp-phase rot">Abschluss</span><span class="cp-datum rot">Mi, 19.05.2027</span>
+              <div class="cp-text"><strong>Jahrbuch fertig &amp; Abschlusspräsentation</strong>Jahrbuch ist gedruckt oder liegt als Druckdatei vor. Vorstellung des Prozesses: Was war schwierig? Was würdet ihr anders machen?
+              <div class="cp-abgabe rot">📋 Vollständige Projektmappe + Präsentation + fertiges Jahrbuch</div></div>
+            </div>
+          </div>
+        </div>
+        <div><p class="abschnitt">Materialien &amp; Hinweise</p>
+          <div class="mat-liste">
+            <div class="mat-item">Layout kostenlos: Canva (canva.com) — einfach, professionell, browserbasiert</div>
+            <div class="mat-item">Druck günstig: Flyeralarm, Saxoprint oder lokale Druckereien — Angebote einholen lassen</div>
+            <div class="mat-item">Vorbild: Abschlussjahrgang 2026 eurer Schule hat ein Jahrbuch produziert — als Referenz nutzen</div>
+          </div>
+        </div>
+        <div class="hinweis"><strong>Wichtig:</strong> Frühzeitig alle Klassen einbinden — ihr seid auf Material von anderen angewiesen. Klare Deadlines für Foto- und Textabgaben setzen. Finanzierung (Eigenanteil pro Schülerin?) früh klären und mit der Schulleitung absprechen.</div>
+      </div>
+    </details>
+  </div>
+
+  <!-- ===== PROJEKT 9 ===== -->
+  <div class="projekt">
+    <details>
+      <summary class="projekt-summary">
+        <div class="projekt-nr">9</div>
+        <div style="flex:1">
+          <div class="projekt-titel">Erinnerungskultur: Stolpersteine &amp; Gedenkstätten</div>
+          <div class="projekt-sub">Biografien recherchieren, veröffentlichen und Erinnerung lebendig halten</div>
+          <div class="tags">
+            <span class="tag">SDG 4 · Bildung</span><span class="tag">SDG 16 · Frieden &amp; Gerechtigkeit</span>
+            <span class="tag ort">🏘️ Pulheim / Köln + Schule</span><span class="tag winter">❄️ Wintergeeignet</span>
+          </div>
+          <div class="projekt-preview">Stolpersteine in Pulheim &amp; Köln erforschen — Biografie veröffentlichen in der offiziellen WDR-Stolpersteine-App</div>
+        </div>
+        <div class="toggle-icon">+</div>
+      </summary>
+      <div class="projekt-body">
+        <div><p class="abschnitt">Worum geht es?</p>
+          <p class="beschreibung">Stolpersteine sind kleine Messingplatten im Gehweg — vor den letzten frei gewählten Wohnorten von Menschen, die im Nationalsozialismus verfolgt, deportiert und ermordet wurden. Ihr erforscht das Schicksal eines Menschen aus Pulheim oder Köln, recherchiert seine Biografie und veröffentlicht sie in der offiziellen WDR-Stolpersteine-App. Euer Text bleibt dort dauerhaft — für alle, die an diesem Stein vorbeigehen und ihn öffnen.</p>
+        </div>
+        <div><p class="abschnitt">Vorbild direkt in Pulheim</p>
+          <div class="variante" style="border-left-color:var(--gelb);">
+            <strong style="color:#92400E;">Geschwister-Scholl-Gymnasium Stommeln, 2021</strong>
+            <p>Schülerinnen eines Projektkurses recherchierten die Biografie der jüdischen Familie Stock aus der Nettegasse in Stommeln — sechs Mitglieder, sechs Schicksale. Sie beantragten die Stolperstein-Verlegung bei der Stadt, der Stadtrat stimmte einstimmig zu, und Gunter Demnig verlegte die Steine persönlich. Die Schülerinnen nahmen sogar Kontakt zu Nachfahren in England auf.
+            </p>
+          </div>
+        </div>
+        <div><p class="abschnitt">Mögliche Projektformen</p>
+          <div class="varianten">
+            <div class="variante"><strong>Variante A: Biografie für die WDR-Stolpersteine-App</strong><p>Ihr recherchiert das Leben eines Menschen hinter einem Stolperstein in Pulheim oder Köln und veröffentlicht eure Biografie in der offiziellen WDR-App. Schülerinnen ab Klasse 9 können sich mit ihrer Schule über die Website anmelden. Das WDR-Projektteam begleitet euch dabei.</p></div>
+            <div class="variante"><strong>Variante B: Stolperstein-Initiative beantragen</strong><p>Ihr recherchiert eine bisher nicht dokumentierte Person aus Pulheim, beantragt einen neuen Stolperstein bei der Stadt und begleitet den Prozess bis zur Verlegung. Aufwändig, aber maximale Wirkung. Zeitrahmen: ca. 6 Monate einplanen.</p></div>
+            <div class="variante"><strong>Variante C: Podcast oder Ausstellung zu Erinnerungsorten</strong><p>Ihr kartiert Erinnerungsorte im Raum Pulheim (Stolpersteine, Gedenkstätten, Gedenktafeln) und macht sie in einem Podcast, Erklärvideo oder einer Schulausstellung sichtbar.</p></div>
+          </div>
+        </div>
+        <div><p class="abschnitt">Projektrollen im Team</p>
+          <div class="rollen-grid">
+            <div class="rolle">Archivrecherche &amp; Quellenarbeit</div><div class="rolle">Biografiearbeit &amp; Schreiben</div>
+            <div class="rolle">Kontakt zu WDR / Stadt / Angehörigen</div><div class="rolle">Dokumentation &amp; Veröffentlichung</div>
+          </div>
+        </div>
+        <div><p class="abschnitt">Checkpoints &amp; Abgaben</p>
+          <div class="checkpoints">
+            <div class="cp"><span class="cp-phase">Phase 1</span><span class="cp-datum">Mi, 04.11.2026</span>
+              <div class="cp-text"><strong>Person &amp; Variante gewählt, Recherche gestartet</strong>Welchen Stolperstein erforscht ihr? WDR-Anmeldung erfolgt oder beantragt. Erste Quellen gesichtet.
+              <div class="cp-abgabe">📋 Projektmappe Teil 1: Auswahl + erste Recherche-Ergebnisse + WDR-Anmeldung</div></div>
+            </div>
+            <div class="cp"><span class="cp-phase gelb">Halbjahr</span><span class="cp-datum gelb">Mi, 16.12.2026</span>
+              <div class="cp-text"><strong>Biografie vollständig recherchiert</strong>Alle verfügbaren Quellen ausgewertet. Erster Entwurf des Biografietextes liegt vor.
+              <div class="cp-abgabe gelb">📋 Projektmappe Teil 2: Biografie-Entwurf + Quellenverzeichnis</div></div>
+            </div>
+            <div class="cp"><span class="cp-phase">Phase 2</span><span class="cp-datum">Mi, 17.03.2027</span>
+              <div class="cp-text"><strong>Biografie veröffentlicht oder eingereicht</strong>Text in der WDR-App veröffentlicht oder bei der Redaktion eingereicht. Ggf. Stolperstein-Antrag bei der Stadt gestellt.
+              <div class="cp-abgabe">📋 Projektmappe Teil 3: Finaler Biografietext + Veröffentlichungsnachweis</div></div>
+            </div>
+            <div class="cp"><span class="cp-phase rot">Abschluss</span><span class="cp-datum rot">Mi, 19.05.2027</span>
+              <div class="cp-text"><strong>Abschlusspräsentation</strong>Wen habt ihr gefunden? Was hat euch berührt? Was bedeutet Erinnerungskultur für euch?
+              <div class="cp-abgabe rot">📋 Vollständige Projektmappe + mündliche Präsentation + Link zur Veröffentlichung</div></div>
+            </div>
+          </div>
+        </div>
+        <div><p class="abschnitt">Materialien &amp; Quellen</p>
+          <div class="mat-liste">
+            <div class="mat-item"><a href="https://www.stolpersteine-nrw.de/" target="_blank">stolpersteine-nrw.de (WDR)</a> — Datenbank, App, Unterrichtsmaterial in 3 Niveaustufen ab Kl. 9, Anmeldung für Schulen unter "Für Lehrer:innen"</div>
+            <div class="mat-item"><a href="https://www.stolpersteine.eu/" target="_blank">stolpersteine.eu</a> — offizielle Website von Gunter Demnig, europäische Datenbank, pädagogische Ansprechpartnerin: paedagogik@stolpersteine.eu</div>
+            <div class="mat-item"><a href="https://www.stadt-koeln.de/leben-in-koeln/kultur/stolpersteine/index.html" target="_blank">stadt-koeln.de/stolpersteine</a> — interaktive Karte aller Stolpersteine in Köln (über 2.400 Steine)</div>
+            <div class="mat-item"><a href="https://gedenkstaette-brauweiler.lvr.de/" target="_blank">gedenkstaette-brauweiler.lvr.de</a> — Gedenkstätte Brauweiler, Archiv &amp; buchbare Workshops (siehe auch Projekt 5)</div>
+            <div class="mat-item">Vorbild Pulheim: Geschwister-Scholl-Gymnasium Stommeln — Familie Stock, Nettegasse (2021/22)</div>
+          </div>
+        </div>
+        <div class="hinweis"><strong>Variante A ist die realistischste für ein Schuljahr.</strong> Variante B (eigener Stolperstein-Antrag) ist möglich, aber aufwändiger — ca. 6 Monate Vorlauf einplanen und früh mit der Stadt Pulheim Kontakt aufnehmen. Beide Varianten haben echte Wirkung weit über die Schule hinaus.</div>
+      </div>
+    </details>
+  </div>
+
+  <!-- ===== PROJEKT 10 ===== -->
+  <div class="projekt">
+    <details>
+      <summary class="projekt-summary">
+        <div class="projekt-nr">10</div>
+        <div style="flex:1">
+          <div class="projekt-titel">Grüner Kiosk — Nachhaltiger Schulhof-Laden</div>
+          <div class="projekt-sub">Schülerinnen entwickeln ein nachhaltiges Verkaufskonzept und betreiben den Kiosk eigenverantwortlich</div>
+          <div class="tags">
+            <span class="tag">SDG 2 · Ernährung</span><span class="tag">SDG 12 · Nachhaltiger Konsum</span>
+            <span class="tag ort">🏫 Schulhof-Kiosk</span><span class="tag winter">❄️ Wintergeeignet</span>
+          </div>
+          <div class="projekt-preview">Regionales, faires Sortiment entwickeln, einkaufen, verkaufen, kalkulieren — jeden Mittwoch auf dem Schulhof</div>
+        </div>
+        <div class="toggle-icon">+</div>
+      </summary>
+      <div class="projekt-body">
+        <div><p class="abschnitt">Worum geht es?</p>
+          <p class="beschreibung">Das grüne Häuschen auf dem Schulhof bekommt ein echtes Konzept. Ihr entwickelt ein nachhaltiges Sortiment, kalkuliert Preise, organisiert den Einkauf und betreibt den Kiosk jeden Mittwoch eigenverantwortlich. Kein Einmal-Event — sondern ein laufendes Format über das ganze Schuljahr.</p>
+        </div>
+        <div><p class="abschnitt">Mögliche Sortimentskonzepte</p>
+          <div class="varianten">
+            <div class="variante"><strong>Variante A: Regionaler Snack-Kiosk</strong><p>Regionale und saisonale Produkte: Äpfel vom lokalen Hof, Fairtrade-Schokolade, selbst gemachte Aufstriche oder Müsliriegel. Mit Kalkulation, Einkaufsliste und Preisgestaltung.</p></div>
+            <div class="variante"><strong>Variante B: Kiosk plus Info</strong><p>Verkauf kombiniert mit wöchentlicher Info-Karte: "Warum regional?" / "Was steckt hinter Fairtrade?" — ein Produkt, eine Geschichte, ein Bewusstsein.</p></div>
+            <div class="variante"><strong>Variante C: Selbst gemacht</strong><p>Schülerinnen produzieren das Sortiment selbst: Smoothies, Kräutertees, Fruchtspieße, Energiebällchen. Rezepte entwickeln, Zutaten einkaufen, Hygiene einhalten.</p></div>
+          </div>
+        </div>
+        <div><p class="abschnitt">Projektrollen im Team</p>
+          <div class="rollen-grid">
+            <div class="rolle">Sortiment &amp; Konzeptentwicklung</div><div class="rolle">Einkauf &amp; Lieferantensuche</div>
+            <div class="rolle">Kalkulation &amp; Finanzen</div><div class="rolle">Verkauf &amp; Kiosk-Betrieb</div>
+            <div class="rolle">Kommunikation &amp; Werbung</div><div class="rolle">Dokumentation &amp; Auswertung</div>
+          </div>
+        </div>
+        <div><p class="abschnitt">Checkpoints &amp; Abgaben</p>
+          <div class="checkpoints">
+            <div class="cp"><span class="cp-phase">Phase 1</span><span class="cp-datum">Mi, 04.11.2026</span>
+              <div class="cp-text"><strong>Sortiment &amp; Kalkulation stehen</strong>Welches Konzept? Welche Produkte? Wo eingekauft? Preise kalkuliert. Genehmigung der Schulleitung eingeholt.
+              <div class="cp-abgabe">📋 Projektmappe Teil 1: Sortimentskonzept + Kalkulation + Genehmigung</div></div>
+            </div>
+            <div class="cp"><span class="cp-phase gelb">Halbjahr</span><span class="cp-datum gelb">Mi, 16.12.2026</span>
+              <div class="cp-text"><strong>Kiosk läuft, erste Bilanz</strong>Mindestens 6 Wochen Betrieb dokumentiert. Einnahmen/Ausgaben aufgelistet. Was läuft gut, was wird angepasst?
+              <div class="cp-abgabe gelb">📋 Projektmappe Teil 2: Betriebsprotokoll + erste Zwischenbilanz</div></div>
+            </div>
+            <div class="cp"><span class="cp-phase">Phase 2</span><span class="cp-datum">Mi, 17.03.2027</span>
+              <div class="cp-text"><strong>Gesamtbilanz &amp; Abschluss Betrieb</strong>Vollständige Einnahmen/Ausgaben-Rechnung. Was hat das Projekt bewirkt — für euch und für die Schulgemeinschaft?
+              <div class="cp-abgabe">📋 Projektmappe Teil 3: Gesamtbilanz + Reflexion</div></div>
+            </div>
+            <div class="cp"><span class="cp-phase rot">Abschluss</span><span class="cp-datum rot">Mi, 19.05.2027</span>
+              <div class="cp-text"><strong>Abschlusspräsentation</strong>Was habt ihr verkauft? Was hat die Schulgemeinschaft gelernt? Würde das Konzept weiterlaufen?
+              <div class="cp-abgabe rot">📋 Vollständige Projektmappe + Präsentation mit Bilanz</div></div>
+            </div>
+          </div>
+        </div>
+        <div><p class="abschnitt">Materialien &amp; Hinweise</p>
+          <div class="mat-liste">
+            <div class="mat-item">Lokale Lieferanten: Wochenmärkte Pulheim, Bioläden, regionale Höfe im Rhein-Erft-Kreis</div>
+            <div class="mat-item">Fairtrade: fairtrade-deutschland.de — Informationen &amp; Bezugsquellen</div>
+            <div class="mat-item">Kalkulation: einfache Excel-Tabelle reicht — Einkaufspreis, Verkaufspreis, Gewinn pro Stück</div>
+          </div>
+        </div>
+        <div class="hinweis"><strong>Wichtig:</strong> Genehmigung der Schulleitung vorab einholen. Hygieneregelungen klären (besonders bei selbst hergestellten Produkten). Einnahmen transparent dokumentieren — das gehört zum Projekt.</div>
+      </div>
+    </details>
+  </div>
+
+  <!-- ===== PROJEKT 11 ===== -->
+  <div class="projekt">
+    <details>
+      <summary class="projekt-summary">
+        <div class="projekt-nr">11</div>
+        <div style="flex:1">
+          <div class="projekt-titel">OMA — Offenes Mittagsangebot gestalten</div>
+          <div class="projekt-sub">Schülerinnen entwickeln ein konkretes wöchentliches Angebot für Klasse 5–7</div>
+          <div class="tags">
+            <span class="tag">SDG 3 · Wohlbefinden</span><span class="tag">SDG 4 · Bildung</span>
+            <span class="tag ort">🏫 Schule (OMA)</span><span class="tag winter">❄️ Wintergeeignet</span>
+          </div>
+          <div class="projekt-preview">Kein bloßes Betreuen — ein durchdachtes, zuverlässiges Angebot das die Jüngeren bereichert</div>
+        </div>
+        <div class="toggle-icon">+</div>
+      </summary>
+      <div class="projekt-body">
+        <div><p class="abschnitt">Worum geht es?</p>
+          <p class="beschreibung">Das OMA ist ein bestehendes Format an eurer Schule für Klasse 5–7. Ihr entwickelt ein konkretes, wöchentliches Angebot das ihr eigenverantwortlich in das OMA einbringt — nicht einmalig, sondern zuverlässig über das ganze Schuljahr. Kein Babysitting. Ein echtes Programm.</p>
+        </div>
+        <div><p class="abschnitt">Mögliche Angebote</p>
+          <div class="varianten">
+            <div class="variante"><strong>Kreativwerkstatt</strong><p>Wöchentlich wechselnde Kreativangebote: Zeichnen, Basteln, Origami, Upcycling. Ihr plant, bereitet vor und leitet die Station.</p></div>
+            <div class="variante"><strong>Bewegungs- &amp; Spielangebot</strong><p>Ihr entwickelt ein strukturiertes Bewegungsprogramm oder Spielangebot für drinnen: Tischtennis-Turnier, Brettspiel-Runde, Bewegungsspiele in der Halle.</p></div>
+            <div class="variante"><strong>Lernhilfe &amp; Hausaufgaben</strong><p>Ihr bietet eine strukturierte Lernhilfe an — nicht einfach nebenher sitzen, sondern mit Methode: Erklären, Nachfragen, Üben.</p></div>
+            <div class="variante"><strong>Kreatives Schreiben oder Lesen</strong><p>Ihr entwickelt ein Lese- oder Schreibformat: Vorlesen, Geschichten erfinden, kleines Schreibprojekt über mehrere Wochen.</p></div>
+          </div>
+        </div>
+        <div><p class="abschnitt">Projektrollen im Team</p>
+          <div class="rollen-grid">
+            <div class="rolle">Konzept &amp; Wochenplanung</div><div class="rolle">Materialvorbereitung</div>
+            <div class="rolle">Durchführung &amp; Leitung</div><div class="rolle">Dokumentation &amp; Reflexion</div>
+          </div>
+        </div>
+        <div><p class="abschnitt">Checkpoints &amp; Abgaben</p>
+          <div class="checkpoints">
+            <div class="cp"><span class="cp-phase">Phase 1</span><span class="cp-datum">Mi, 04.11.2026</span>
+              <div class="cp-text"><strong>Angebot &amp; Konzept stehen</strong>Welches Format? Für welche Gruppe? Wochenplan für die ersten 6 Wochen liegt vor. Absprache mit OMA-Verantwortlichen erfolgt.
+              <div class="cp-abgabe">📋 Projektmappe Teil 1: Konzept + Wochenplan + Absprache OMA</div></div>
+            </div>
+            <div class="cp"><span class="cp-phase gelb">Halbjahr</span><span class="cp-datum gelb">Mi, 16.12.2026</span>
+              <div class="cp-text"><strong>Angebot läuft zuverlässig</strong>Mindestens 6 Einheiten dokumentiert. Feedback der Schülerinnen eingeholt. Anpassungen vorgenommen.
+              <div class="cp-abgabe gelb">📋 Projektmappe Teil 2: Einheiten-Protokolle + Feedback + Anpassungen</div></div>
+            </div>
+            <div class="cp"><span class="cp-phase">Phase 2</span><span class="cp-datum">Mi, 17.03.2027</span>
+              <div class="cp-text"><strong>Gesamtangebot abgeschlossen</strong>Alle Einheiten durchgeführt. Rückmeldung der OMA-Verantwortlichen eingeholt.
+              <div class="cp-abgabe">📋 Projektmappe Teil 3: Gesamtdoku + Feedback OMA-Leitung</div></div>
+            </div>
+            <div class="cp"><span class="cp-phase rot">Abschluss</span><span class="cp-datum rot">Mi, 19.05.2027</span>
+              <div class="cp-text"><strong>Abschlusspräsentation</strong>Was hat das Angebot den Jüngeren gebracht? Was habt ihr als Klasse 10 dabei gelernt?
+              <div class="cp-abgabe rot">📋 Vollständige Projektmappe + mündliche Präsentation</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="hinweis"><strong>Grundprinzip:</strong> Zuverlässigkeit ist nicht optional. Wer ein Angebot für jüngere Schülerinnen macht, muss es auch halten — jede Woche, pünktlich, vorbereitet. Das ist der Kern der Verantwortung.</div>
+      </div>
+    </details>
+  </div>
+
+  <!-- ===== PROJEKT 12 ===== -->
+  <div class="projekt">
+    <details>
+      <summary class="projekt-summary">
+        <div class="projekt-nr">12</div>
+        <div style="flex:1">
+          <div class="projekt-titel">Innerschulische Konzepte: Teestube, Teatime &amp; Ruheoase</div>
+          <div class="projekt-sub">Schülerinnen entwickeln ein Wohlfühlformat für die Schulgemeinschaft und setzen es um</div>
+          <div class="tags">
+            <span class="tag">SDG 3 · Wohlbefinden</span><span class="tag">SDG 5 · Gleichstellung</span>
+            <span class="tag ort">🏫 Schule</span><span class="tag winter">❄️ Wintergeeignet</span>
+          </div>
+          <div class="projekt-preview">Rückzugsort, Begegnungsformat oder Mädchen-Treff — mit Konzept, Struktur und Zuverlässigkeit</div>
+        </div>
+        <div class="toggle-icon">+</div>
+      </summary>
+      <div class="projekt-body">
+        <div><p class="abschnitt">Worum geht es?</p>
+          <p class="beschreibung">Ihr entwickelt ein Format das der Schulgemeinschaft gut tut — als regelmäßiges Angebot, nicht als Einmal-Event. Das Konzept muss vor dem Start stehen: Wer kommt? Was passiert dort? Wie oft? Wie wird es bekannt gemacht? Und wer ist verlässlich dabei?</p>
+        </div>
+        <div><p class="abschnitt">Drei mögliche Formate</p>
+          <div class="varianten">
+            <div class="variante"><strong>Teestube — Offener Treff in der Pause oder Mittagszeit</strong><p>Ein ruhiger Raum, Tee, ein paar Snacks, entspannte Atmosphäre. Offen für alle. Ihr organisiert den Raum, bereitet vor, seid präsent und sorgt für die Atmosphäre. Regelmäßig, verlässlich, einladend.</p></div>
+            <div class="variante"><strong>Teatime für Mädchen — Geschützter Begegnungsraum</strong><p>Ein regelmäßiges Format speziell für Mädchen der Klasse 5–8. Themen: Stärken entdecken, Stress bewältigen, offen reden. Kein Workshop, sondern ein geschützter Raum mit Struktur. Ihr entwickelt den Rahmen und moderiert.</p></div>
+            <div class="variante"><strong>Ruheoase — Stiller Rückzugsort</strong><p>Ihr richtet einen Raum als Ruheoase ein und betreut ihn regelmäßig: klare Regeln, ruhige Atmosphäre, kein Lärm. Für Schülerinnen die in der Pause Stille brauchen. Konzept beinhaltet Raumgestaltung, Regeln und Betreuungsplan.</p></div>
+          </div>
+        </div>
+        <div><p class="abschnitt">Projektrollen im Team</p>
+          <div class="rollen-grid">
+            <div class="rolle">Konzept &amp; Raumplanung</div><div class="rolle">Organisation &amp; Vorbereitung</div>
+            <div class="rolle">Durchführung &amp; Betreuung</div><div class="rolle">Kommunikation &amp; Werbung in der Schule</div>
+          </div>
+        </div>
+        <div><p class="abschnitt">Checkpoints &amp; Abgaben</p>
+          <div class="checkpoints">
+            <div class="cp"><span class="cp-phase">Phase 1</span><span class="cp-datum">Mi, 04.11.2026</span>
+              <div class="cp-text"><strong>Format, Raum &amp; Zielgruppe konkret geplant</strong>Welches Format? Welcher Raum? Wann genau? Genehmigung der Schulleitung. Kommunikationsplan für den Start.
+              <div class="cp-abgabe">📋 Projektmappe Teil 1: Konzept + Raumplan + Genehmigung</div></div>
+            </div>
+            <div class="cp"><span class="cp-phase gelb">Halbjahr</span><span class="cp-datum gelb">Mi, 16.12.2026</span>
+              <div class="cp-text"><strong>Format läuft regelmäßig</strong>Mindestens 6 Durchführungen dokumentiert. Wie viele kommen? Was funktioniert? Was wird angepasst?
+              <div class="cp-abgabe gelb">📋 Projektmappe Teil 2: Protokolle + Teilnahmezahlen + Anpassungen</div></div>
+            </div>
+            <div class="cp"><span class="cp-phase">Phase 2</span><span class="cp-datum">Mi, 17.03.2027</span>
+              <div class="cp-text"><strong>Gesamtbilanz</strong>Format vollständig durchgeführt. Feedback der Teilnehmenden eingeholt. Rückmeldung der Schulleitung.
+              <div class="cp-abgabe">📋 Projektmappe Teil 3: Gesamtdoku + Feedback</div></div>
+            </div>
+            <div class="cp"><span class="cp-phase rot">Abschluss</span><span class="cp-datum rot">Mi, 19.05.2027</span>
+              <div class="cp-text"><strong>Abschlusspräsentation</strong>Was hat das Format der Schulgemeinschaft gebracht? Sollte es weitergehen?
+              <div class="cp-abgabe rot">📋 Vollständige Projektmappe + mündliche Präsentation</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="hinweis"><strong>Wichtig:</strong> Raumgenehmigung und fester Termin müssen vor dem Start stehen. Ohne verlässlichen Ort und feste Zeit funktioniert kein dieser Formate. Schulleitung frühzeitig einbinden.</div>
+      </div>
+    </details>
+  </div>
+
+  <!-- ===== PROJEKT 13 ===== -->
+  <div class="projekt">
+    <details>
+      <summary class="projekt-summary">
+        <div class="projekt-nr">13</div>
+        <div style="flex:1">
+          <div class="projekt-titel">Lesepaten — Vorlesen &amp; Leseförderung</div>
+          <div class="projekt-sub">Schülerinnen entwickeln ein strukturiertes Leseangebot für jüngere Klassen</div>
+          <div class="tags">
+            <span class="tag">SDG 4 · Bildung</span><span class="tag">SDG 10 · Chancengleichheit</span>
+            <span class="tag ort">🏫 Schule oder Grundschule/Bücherei</span><span class="tag winter">❄️ Wintergeeignet</span>
+          </div>
+          <div class="projekt-preview">Kein bloßes Vorlesen — ein durchdachtes Leseangebot mit Auswahl, Vorbereitung und Nachgespräch</div>
+        </div>
+        <div class="toggle-icon">+</div>
+      </summary>
+      <div class="projekt-body">
+        <div><p class="abschnitt">Worum geht es?</p>
+          <p class="beschreibung">Ihr übernehmt Verantwortung für die Leseförderung jüngerer Schülerinnen. Das bedeutet: Bücher auswählen, Lesestunden vorbereiten, vorlesen und ein Nachgespräch führen. Keine spontane Aktion — ein durchdachtes Format das über Monate läuft.</p>
+        </div>
+        <div><p class="abschnitt">Mögliche Formate</p>
+          <div class="varianten">
+            <div class="variante"><strong>Lesepaten für Klasse 5/6 an der eigenen Schule</strong><p>Regelmäßige Lesestunden in der Bibliothek oder einem Klassenraum. Ihr wählt Bücher aus, bereitet Fragen vor und leitet das Nachgespräch. Zwei Schülerinnen pro Gruppe, maximal 8 Lesekinder.</p></div>
+            <div class="variante"><strong>Vorlese-Nachmittag in der Stadtbücherei Pulheim</strong><p>In Kooperation mit der Stadtbücherei bietet ihr regelmäßige Vorlese-Nachmittage für Grundschulkinder an. Die Bücherei stellt Raum und Bücher, ihr bringt das Konzept und die Zuverlässigkeit.</p></div>
+            <div class="variante"><strong>Leseprojekt mit Produkt</strong><p>Am Ende entsteht etwas: ein selbst gemachtes Buch, eine illustrierte Geschichte oder ein Hör-Podcast der Kinder, die ihr begleitet habt. Leseförderung mit kreativem Abschluss.</p></div>
+          </div>
+        </div>
+        <div><p class="abschnitt">Projektrollen im Team</p>
+          <div class="rollen-grid">
+            <div class="rolle">Buchauswahl &amp; Vorbereitung</div><div class="rolle">Vorlesen &amp; Gesprächsleitung</div>
+            <div class="rolle">Kontakt Bücherei / Schule</div><div class="rolle">Dokumentation &amp; Auswertung</div>
+          </div>
+        </div>
+        <div><p class="abschnitt">Checkpoints &amp; Abgaben</p>
+          <div class="checkpoints">
+            <div class="cp"><span class="cp-phase">Phase 1</span><span class="cp-datum">Mi, 04.11.2026</span>
+              <div class="cp-text"><strong>Format, Partner &amp; Leseplan stehen</strong>Welches Format? Welche Zielgruppe? Erster Leseplan (Bücher, Termine). Kooperation zugesagt.
+              <div class="cp-abgabe">📋 Projektmappe Teil 1: Konzept + Leseplan + Kooperationsvereinbarung</div></div>
+            </div>
+            <div class="cp"><span class="cp-phase gelb">Halbjahr</span><span class="cp-datum gelb">Mi, 16.12.2026</span>
+              <div class="cp-text"><strong>Mindestens 5 Lesestunden durchgeführt</strong>Dokumentation aktuell. Wie reagieren die Kinder? Was liest besonders gut?
+              <div class="cp-abgabe gelb">📋 Projektmappe Teil 2: Lesestunden-Protokolle + Beobachtungen</div></div>
+            </div>
+            <div class="cp"><span class="cp-phase">Phase 2</span><span class="cp-datum">Mi, 17.03.2027</span>
+              <div class="cp-text"><strong>Leseprojekt abgeschlossen</strong>Alle Einheiten durch. Ggf. Abschlussprodukt fertig. Feedback der Kinder und der Kooperationspartner.
+              <div class="cp-abgabe">📋 Projektmappe Teil 3: Gesamtdoku + Feedback + ggf. Produkt</div></div>
+            </div>
+            <div class="cp"><span class="cp-phase rot">Abschluss</span><span class="cp-datum rot">Mi, 19.05.2027</span>
+              <div class="cp-text"><strong>Abschlusspräsentation</strong>Was haben die Kinder gewonnen? Was habt ihr über Leseförderung gelernt?
+              <div class="cp-abgabe rot">📋 Vollständige Projektmappe + mündliche Präsentation</div></div>
+            </div>
+          </div>
+        </div>
+        <div><p class="abschnitt">Materialien &amp; Quellen</p>
+          <div class="mat-liste">
+            <div class="mat-item"><a href="https://www.leseforum.nrw.de/" target="_blank">leseforum.nrw.de</a> — Leseförderung NRW, Tipps und Buchempfehlungen</div>
+            <div class="mat-item">Stadtbücherei Pulheim — Kooperationsanfrage direkt stellen, Raum und Bücher werden gestellt</div>
+          </div>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <!-- ===== PROJEKT 14 ===== -->
+  <div class="projekt">
+    <details>
+      <summary class="projekt-summary">
+        <div class="projekt-nr">14</div>
+        <div style="flex:1">
+          <div class="projekt-titel">Bücherei — Angebot für die Stadtbücherei Pulheim</div>
+          <div class="projekt-sub">Schülerinnen entwickeln ein konkretes Format und bringen es regelmäßig in die Bücherei</div>
+          <div class="tags">
+            <span class="tag">SDG 4 · Bildung</span><span class="tag">SDG 11 · Gemeinschaft</span>
+            <span class="tag ort">🏛️ Stadtbücherei Pulheim</span><span class="tag winter">❄️ Wintergeeignet</span>
+          </div>
+          <div class="projekt-preview">Vorlesen, Medienworkshop oder Digitalkurs — ein zuverlässiges Angebot in der Bücherei</div>
+        </div>
+        <div class="toggle-icon">+</div>
+      </summary>
+      <div class="projekt-body">
+        <div><p class="abschnitt">Worum geht es?</p>
+          <p class="beschreibung">Die Stadtbücherei Pulheim ist ein öffentlicher Ort für alle. Ihr entwickelt ein konkretes Angebot das ihr regelmäßig dort durchführt — für Kinder, Jugendliche oder Senioren. Die Bücherei stellt den Raum, ihr bringt das Konzept und die Verlässlichkeit.</p>
+        </div>
+        <div><p class="abschnitt">Mögliche Angebote</p>
+          <div class="varianten">
+            <div class="variante"><strong>Vorlese-Nachmittag für Grundschulkinder</strong><p>Regelmäßiger Termin in der Bücherei, Bücher auswählen, vorlesen, Nachgespräch führen. In Absprache mit der Bücherei als fester Termin im Programm.</p></div>
+            <div class="variante"><strong>Medienworkshop für Kinder</strong><p>Wie nutze ich die Bücherei digital? Wie finde ich Bücher, Hörbucher, E-Books? Workshop für Grundschulkinder als Einführung in die Bücherei-Welt.</p></div>
+            <div class="variante"><strong>Digitalkurs für Senioren in der Bücherei</strong><p>Kombination mit Projekt 4: Schülerinnen bieten ihren Digitalkurs in den Räumen der Bücherei an — öffentlich zugänglich, professioneller Rahmen.</p></div>
+          </div>
+        </div>
+        <div><p class="abschnitt">Projektrollen im Team</p>
+          <div class="rollen-grid">
+            <div class="rolle">Konzept &amp; Angebotsentwicklung</div><div class="rolle">Kontakt &amp; Kooperation Bücherei</div>
+            <div class="rolle">Durchführung &amp; Leitung</div><div class="rolle">Dokumentation &amp; Auswertung</div>
+          </div>
+        </div>
+        <div><p class="abschnitt">Checkpoints &amp; Abgaben</p>
+          <div class="checkpoints">
+            <div class="cp"><span class="cp-phase">Phase 1</span><span class="cp-datum">Mi, 04.11.2026</span>
+              <div class="cp-text"><strong>Angebot &amp; Kooperation stehen</strong>Bücherei hat zugesagt. Fester Termin vereinbart. Erstes Konzept liegt vor.
+              <div class="cp-abgabe">📋 Projektmappe Teil 1: Konzept + Terminplan + Kooperationsbestätigung</div></div>
+            </div>
+            <div class="cp"><span class="cp-phase gelb">Halbjahr</span><span class="cp-datum gelb">Mi, 16.12.2026</span>
+              <div class="cp-text"><strong>Angebot läuft regelmäßig</strong>Mindestens 4 Einheiten dokumentiert. Feedback der Teilnehmenden eingeholt.
+              <div class="cp-abgabe gelb">📋 Projektmappe Teil 2: Einheiten-Protokolle + Feedback</div></div>
+            </div>
+            <div class="cp"><span class="cp-phase">Phase 2</span><span class="cp-datum">Mi, 17.03.2027</span>
+              <div class="cp-text"><strong>Angebot abgeschlossen</strong>Alle Einheiten durch. Rückmeldung der Bücherei liegt vor.
+              <div class="cp-abgabe">📋 Projektmappe Teil 3: Gesamtdoku + Rückmeldung Bücherei</div></div>
+            </div>
+            <div class="cp"><span class="cp-phase rot">Abschluss</span><span class="cp-datum rot">Mi, 19.05.2027</span>
+              <div class="cp-text"><strong>Abschlusspräsentation</strong>Was hat das Angebot bewirkt? Was würdet ihr der Bücherei als Empfehlung mitgeben?
+              <div class="cp-abgabe rot">📋 Vollständige Projektmappe + mündliche Präsentation</div></div>
+            </div>
+          </div>
+        </div>
+        <div><p class="abschnitt">Kontakt</p>
+          <div class="mat-liste">
+            <div class="mat-item">Stadtbücherei Pulheim — frühzeitig Kontakt aufnehmen und konkretes Angebot vorstellen</div>
+          </div>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <!-- ===== PROJEKT 15 ===== -->
+  <div class="projekt">
+    <details>
+      <summary class="projekt-summary">
+        <div class="projekt-nr">15</div>
+        <div style="flex:1">
+          <div class="projekt-titel">Tafel, Flüchtlingshilfe &amp; Obdachlosenhilfe</div>
+          <div class="projekt-sub">Konkrete Projekte an sozialen Einrichtungen — mit eigenem Format, nicht als Helfer im Hintergrund</div>
+          <div class="tags">
+            <span class="tag">SDG 1 · Keine Armut</span><span class="tag">SDG 10 · Weniger Ungleichheiten</span><span class="tag">SDG 16 · Gerechtigkeit</span>
+            <span class="tag ort">🏢 Soziale Einrichtungen Pulheim/Köln</span><span class="tag winter">❄️ Wintergeeignet</span>
+          </div>
+          <div class="projekt-preview">Kein Kartoffeln schleppen — ein eigenes Angebot entwickeln das die Einrichtung wirklich braucht</div>
+        </div>
+        <div class="toggle-icon">+</div>
+      </summary>
+      <div class="projekt-body">
+        <div><p class="abschnitt">Worum geht es?</p>
+          <p class="beschreibung">Soziale Einrichtungen wie die Tafel, Flüchtlingsunterkünfte oder Obdachloseneinrichtungen brauchen nicht einfach Hände — sie brauchen verlässliche, durchdachte Angebote. Ihr entwickelt ein konkretes Projekt das einen echten Mehrwert bringt und führt es regelmäßig durch. Kein einmaliger Besuch, kein Helfen im Hintergrund.</p>
+        </div>
+        <div><p class="abschnitt">Mögliche Projekte</p>
+          <div class="varianten">
+            <div class="variante"><strong>Tafel: Willkommensmappe &amp; Wegweiser</strong><p>Ihr entwickelt eine mehrsprachige Informationsmappe für neue Tafel-Besucherinnen: Was gibt es wo in Pulheim? Welche Hilfsangebote existieren? Ihr recherchiert, gestaltet und aktualisiert die Mappe — und verteilt sie regelmäßig bei der Tafel.</p></div>
+            <div class="variante"><strong>Flüchtlingshilfe: Sprach- &amp; Lernpaten</strong><p>Ihr entwickelt ein strukturiertes Deutschlern- oder Hausaufgaben-Angebot für neu zugewanderte Kinder oder Jugendliche in Pulheim. Mit Materialien, Methoden und einem festen wöchentlichen Termin.</p></div>
+            <div class="variante"><strong>Obdachlosenhilfe: Würdiges Angebot mit Konzept</strong><p>In Absprache mit einer Einrichtung in Köln oder Pulheim entwickelt ihr ein konkretes Angebot: ein Frühstücksformat, ein Gesprächsangebot, ein Kreativangebot — mit Vorbereitung, Zuverlässigkeit und Reflexion.</p></div>
+          </div>
+        </div>
+        <div><p class="abschnitt">Projektrollen im Team</p>
+          <div class="rollen-grid">
+            <div class="rolle">Konzept &amp; Angebotsentwicklung</div><div class="rolle">Kontakt zur Einrichtung</div>
+            <div class="rolle">Durchführung &amp; Betreuung</div><div class="rolle">Dokumentation &amp; Reflexion</div>
+          </div>
+        </div>
+        <div><p class="abschnitt">Checkpoints &amp; Abgaben</p>
+          <div class="checkpoints">
+            <div class="cp"><span class="cp-phase">Phase 1</span><span class="cp-datum">Mi, 04.11.2026</span>
+              <div class="cp-text"><strong>Einrichtung &amp; konkretes Angebot stehen</strong>Einrichtung hat zugesagt. Fester Termin vereinbart. Konzept liegt vor — nicht "wir helfen", sondern "wir bieten X an".
+              <div class="cp-abgabe">📋 Projektmappe Teil 1: Konzept + Kooperationsvereinbarung + Terminplan</div></div>
+            </div>
+            <div class="cp"><span class="cp-phase gelb">Halbjahr</span><span class="cp-datum gelb">Mi, 16.12.2026</span>
+              <div class="cp-text"><strong>Angebot läuft zuverlässig</strong>Mindestens 4 Einheiten durchgeführt und dokumentiert. Zwischenreflexion: Was ist schwieriger als erwartet?
+              <div class="cp-abgabe gelb">📋 Projektmappe Teil 2: Einheiten-Protokolle + Zwischenreflexion</div></div>
+            </div>
+            <div class="cp"><span class="cp-phase">Phase 2</span><span class="cp-datum">Mi, 17.03.2027</span>
+              <div class="cp-text"><strong>Projekt abgeschlossen</strong>Alle Einheiten durch. Feedback der Einrichtung. Was bleibt nach dem Projekt?
+              <div class="cp-abgabe">📋 Projektmappe Teil 3: Gesamtdoku + Feedback Einrichtung</div></div>
+            </div>
+            <div class="cp"><span class="cp-phase rot">Abschluss</span><span class="cp-datum rot">Mi, 19.05.2027</span>
+              <div class="cp-text"><strong>Abschlusspräsentation</strong>Was habt ihr über Armut, Ausgrenzung und Würde gelernt? Was nehmt ihr mit?
+              <div class="cp-abgabe rot">📋 Vollständige Projektmappe + mündliche Präsentation</div></div>
+            </div>
+          </div>
+        </div>
+        <div><p class="abschnitt">Mögliche Einrichtungen</p>
+          <div class="mat-liste">
+            <div class="mat-item">Tafel Pulheim — tafel.de (Ortsverband Pulheim)</div>
+            <div class="mat-item">Caritas Rhein-Erft — caritas-rhein-erft.de — Flüchtlingshilfe, Obdachlosenarbeit</div>
+            <div class="mat-item">Diakonie Michaelshoven Köln — diakonie-michaelshoven.de</div>
+            <div class="mat-item">Willkommensnetz Pulheim — lokale Flüchtlingshilfe, frühzeitig Kontakt aufnehmen</div>
+          </div>
+        </div>
+        <div class="hinweis"><strong>Grundprinzip für alle außerschulischen Projekte:</strong> Kein Projekt ohne konkretes Angebot. "Wir gehen hin und schauen was gebraucht wird" ist kein Projekt. Das Angebot muss vor dem ersten Termin feststehen — und wird dann zuverlässig geliefert.</div>
+      </div>
+    </details>
+  </div>
+
+  <hr class="section">
+
+  <!-- RAHMENREGELN -->
+  <div class="info-box">
+    <h2>Für alle Projekte gilt</h2>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-top:14px;">
+      <div class="cp"><span class="cp-phase">Teamarbeit</span><div class="cp-text">Teams haben maximal 4 Personen. Die Arbeit jeder Person muss im Projekt sichtbar sein. Jede Person hat eine klare Rolle.</div></div>
+      <div class="cp"><span class="cp-phase">Dokumentation</span><div class="cp-text">Wochenprotokoll nach jedem Projekttag (Mittwoch). Ohne laufende Dokumentation kann keine Note erteilt werden.</div></div>
+      <div class="cp"><span class="cp-phase">Jahreszeit</span><div class="cp-text">Durchführungsphase Oktober bis März. Alle Projekte finden überwiegend drinnen statt — Wintergeeignetheit ist Pflicht.</div></div>
+      <div class="cp"><span class="cp-phase">Wirkung</span><div class="cp-text">Am Ende steht immer etwas Sichtbares: Workshop, Produkt oder Präsentation. Andere profitieren davon.</div></div>
+      <div class="cp"><span class="cp-phase">Sichtbarkeit</span><div class="cp-text">Einige Projekte — besonders im Bereich Medien &amp; KI — können auf der <a href="https://digitale-helden.de/generation-ki-aktionen" target="_blank" style="color:var(--gruen);font-weight:600;">Generation KI Aktionsplattform</a> der Digitalen Helden eingereicht werden. Das gibt eurem Projekt Reichweite über die Schule hinaus.</div></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <strong>Projekt Zukunft · Klasse 10 · Gesamtschule Pulheim · Schuljahr 2026/27</strong><br>
+  Ferientermine NRW (Quelle: Schulministerium NRW):<br>
+  Herbstferien 17.–31.10.2026 &nbsp;|&nbsp; Weihnachtsferien 23.12.2026–6.1.2027 &nbsp;|&nbsp; Halbjahreszeugnisse 5.2.2027 &nbsp;|&nbsp; Osterferien 22.3.–3.4.2027
+</div>
+
+
+
+</body></html>

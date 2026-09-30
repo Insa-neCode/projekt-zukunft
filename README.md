@@ -1,10 +1,13 @@
-# Projekt Zukunft – Stärken-Fragebogen
+# Projekt Zukunft – Jahrgang 10
 
-Interaktiver Stärken-Fragebogen für Schüler:innen der Jahrgangsstufe 10 an der Gesamtschule Pulheim (Verantwortung 2, Schuljahr 2026/27).
+Materialien für Projekt Zukunft an der Gesamtschule Pulheim (Verantwortung 2, Schuljahr 2026/27).
 
-**Direkt nutzen:** https://insa-necode.github.io/projekt-zukunft/
+| Material | Link |
+|---|---|
+| Stärken-Fragebogen | https://insa-necode.github.io/projekt-zukunft/ |
+| Projektbibliothek (15 Projekte, Jahresplan, Checkpoints) | https://insa-necode.github.io/projekt-zukunft/projektbibliothek/ |
 
-## Inhalt
+## Stärken-Fragebogen
 
 - **Teil A – Fähigkeiten:** 21 Aussagen in fünf Bereichen, danach eine Auswahl der drei wichtigsten Fähigkeiten
 - **Teil B – Arbeitsweise:** fünf Aussagen
