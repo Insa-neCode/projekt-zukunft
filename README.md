@@ -5,7 +5,7 @@ Materialien für Projekt Zukunft an der Gesamtschule Pulheim (Verantwortung 2, S
 | Material | Link |
 |---|---|
 | Stärken-Fragebogen | https://insa-necode.github.io/projekt-zukunft/ |
-| Projektbibliothek (15 Projekte, Jahresplan, Checkpoints) | https://insa-necode.github.io/projekt-zukunft/projektbibliothek/ |
+| Projektbibliothek (16 Projekte, Jahresplan, Checkpoints) | https://insa-necode.github.io/projekt-zukunft/projektbibliothek/ |
 
 ## Stärken-Fragebogen
 
